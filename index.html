@@ -13,6 +13,13 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/(C)%20Hannes%20Niederkofler_WEB-0186%20Algund%20Panorama%20Herbst.jpg">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://hotel.mariatheresia.it">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WP4PKRXK');</script>
+<!-- End Google Tag Manager -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -416,9 +423,52 @@ footer{background:var(--cream-deep);border-top:1px solid var(--border);color:var
 .photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .photo-strip img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--cream-deep)}
 @media(max-width:560px){.photo-strip{grid-template-columns:1fr 1fr}}
+
+/* HOTEL GALLERY SLIDER */
+.gallery-sec{background:var(--cream-mid)}
+.gallery-inner{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,56px) clamp(40px,6vw,60px)}
+.gallery-slider-outer{position:relative;overflow:hidden;border-radius:1px}
+.gallery-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.gallery-slide{flex:0 0 100%;position:relative}
+.gallery-slide img{width:100%;height:clamp(240px,42vw,520px);object-fit:cover;display:block;background:var(--cream-deep)}
+.gallery-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:14px 20px;
+  background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 100%);
+  color:#fff;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;font-style:italic;
+}
+.gallery-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,.88);border:none;cursor:pointer;
+  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:var(--dark);transition:background .2s;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+.gallery-nav:hover{background:#fff}
+.gallery-nav.gprev{left:12px}
+.gallery-nav.gnxt{right:12px}
+.gallery-dots-wrap{display:flex;gap:6px;justify-content:center;margin-top:14px}
+.gdot{width:6px;height:6px;border-radius:50%;background:var(--border);border:none;cursor:pointer;transition:background .2s,transform .2s}
+.gdot.a{background:var(--gold);transform:scale(1.3)}
+
+/* Mobile achelgrid — shown on small screens instead of slider */
+.hotel-mgrid{display:none;gap:3px;margin-top:3px}
+.hotel-mgrid img{width:100%;object-fit:cover;display:block;background:var(--cream-deep)}
+@media(max-width:640px){
+  .gallery-slider-outer{display:none}
+  .gallery-nav,.gallery-dots-wrap{display:none}
+  .hotel-mgrid{display:grid;grid-template-columns:1fr 1fr}
+  .hotel-mgrid img{aspect-ratio:1/1}
+  .hotel-mgrid img:first-child{grid-column:span 2;aspect-ratio:16/7}
+}
 </style>
 </head>
 <body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WP4PKRXK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- HEADER -->
 <header class="hdr">
@@ -658,6 +708,76 @@ footer{background:var(--cream-deep);border-top:1px solid var(--border);color:var
       <button class="sl-btn" id="slPrev">&#8592;</button>
       <button class="sl-btn" id="slNext">&#8594;</button>
       <div class="sl-dots" id="slDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOTEL GALLERY -->
+<section class="sec gallery-sec" style="padding-top:0">
+  <div class="gallery-inner">
+    <p class="eyebrow rv" style="padding-top:clamp(48px,8vw,72px)">The Hotel</p>
+    <h2 class="sec-h2 rv">A place worth <em>seeing for yourself</em></h2>
+    <div class="bar rv"></div>
+    <p class="lead rv" style="margin-bottom:28px">Pool, panorama terrace, spa, dining — a glimpse of what awaits you in Algund.</p>
+
+    <!-- Desktop Slider -->
+    <div class="gallery-slider-outer rv">
+      <div class="gallery-track" id="galleryTrack">
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/110_maria-theresia_%C2%A9KOTTERSTEGER_250918_DJI_0989-10.jpg" alt="Hotel Maria Theresia aerial view outdoor pool" loading="lazy">
+          <div class="gallery-caption">Outdoor pool & hotel from above</div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/035_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_6413-2753.jpg" alt="Hotel Maria Theresia outdoor pool" loading="lazy">
+          <div class="gallery-caption">Panorama outdoor pool · 30°C</div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/107_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_7629-550.jpg" alt="Hotel Maria Theresia pool guest" loading="lazy">
+          <div class="gallery-caption">Pure relaxation at the pool</div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/030_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_6573-2545.jpg" alt="Hotel Maria Theresia breakfast buffet" loading="lazy">
+          <div class="gallery-caption">Breakfast buffet — daily from 7:30 AM</div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/037_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3975.jpg" alt="Hotel Maria Theresia sauna spa" loading="lazy">
+          <div class="gallery-caption">New Spa 2026 — sauna & relaxation</div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/079_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_7259-1746.jpg" alt="Hotel Maria Theresia gourmet dinner" loading="lazy">
+          <div class="gallery-caption">5-course gourmet dinner · every evening</div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/020_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3948.jpg" alt="Hotel Maria Theresia panorama view" loading="lazy">
+          <div class="gallery-caption">Panorama view over the Merano valley</div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/066_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_4032.jpg" alt="Hotel Maria Theresia junior suite" loading="lazy">
+          <div class="gallery-caption">Junior Suite Mandarin — new 2024</div>
+        </div>
+
+      </div>
+      <button class="gallery-nav gprev" id="gPrev">&#8592;</button>
+      <button class="gallery-nav gnxt" id="gNext">&#8594;</button>
+    </div>
+    <div class="gallery-dots-wrap rv" id="gDots"></div>
+
+    <!-- Mobile achelgrid -->
+    <div class="hotel-mgrid">
+      <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/110_maria-theresia_%C2%A9KOTTERSTEGER_250918_DJI_0989-10.jpg" alt="Hotel from above" loading="lazy">
+      <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/035_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_6413-2753.jpg" alt="Outdoor pool" loading="lazy">
+      <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/107_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_7629-550.jpg" alt="Pool relax" loading="lazy">
+      <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/030_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_6573-2545.jpg" alt="Breakfast" loading="lazy">
+      <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/037_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3975.jpg" alt="Sauna" loading="lazy">
+      <img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/079_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_7259-1746.jpg" alt="Dinner" loading="lazy">
     </div>
   </div>
 </section>
@@ -1190,6 +1310,36 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("slNext").addEventListener("click",function(){goTo(cur+1);});
   window.addEventListener("resize",function(){cur=Math.min(cur,maxI());buildDots();goTo(cur);});
   buildDots();
+
+  /* GALLERY SLIDER */
+  var gTrack=document.getElementById("galleryTrack");
+  var gDotsEl=document.getElementById("gDots");
+  if(gTrack){
+    var gSlides=gTrack.querySelectorAll(".gallery-slide");
+    var gCur=0,gTotal=gSlides.length;
+    function buildGDots(){
+      gDotsEl.innerHTML="";
+      for(var i=0;i<gTotal;i++){
+        var d=document.createElement("button");
+        d.className="gdot"+(i===0?" a":"");
+        (function(idx){d.addEventListener("click",function(){gGoTo(idx);});})(i);
+        gDotsEl.appendChild(d);
+      }
+    }
+    function gGoTo(i){
+      gCur=((i%gTotal)+gTotal)%gTotal;
+      gTrack.style.transform="translateX(-"+(gCur*100)+"%)";
+      document.querySelectorAll(".gdot").forEach(function(d,j){d.classList.toggle("a",j===gCur);});
+    }
+    var gPrevBtn=document.getElementById("gPrev"),gNextBtn=document.getElementById("gNext");
+    if(gPrevBtn)gPrevBtn.addEventListener("click",function(){gGoTo(gCur-1);clearInterval(gTimer);});
+    if(gNextBtn)gNextBtn.addEventListener("click",function(){gGoTo(gCur+1);clearInterval(gTimer);});
+    var gTouchX=0;
+    gTrack.addEventListener("touchstart",function(e){gTouchX=e.touches[0].clientX;},{passive:true});
+    gTrack.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clientX-gTouchX;if(Math.abs(dx)>40){gGoTo(dx<0?gCur+1:gCur-1);clearInterval(gTimer);}},{passive:true});
+    var gTimer=setInterval(function(){gGoTo(gCur+1);},5500);
+    buildGDots();
+  }
 
   /* REVEAL */
   var rvEls=document.querySelectorAll(".rv");
