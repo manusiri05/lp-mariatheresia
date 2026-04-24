@@ -1,1 +1,1391 @@
-<h1>Maria Theresia</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Maria Theresia Algund – Your 4-Star Holiday near Merano, South Tyrol</title>
+<meta name="description" content="Discover Hotel Maria Theresia in Algund near Merano, South Tyrol. Panoramic views, elegant rooms, new spa & wellness area. Perfect retreat for Dutch, Belgian & Danish travellers.">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
+
+<!-- Flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<style>
+/* ─── RESET & BASE ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.65;color:#2a2118;background:#faf8f4;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ─── CSS VARIABLES ─── */
+:root{
+  --gold:#d59d34;
+  --gold-dark:#b8842a;
+  --gray:#6b6055;
+  --cream:#faf8f4;
+  --white:#ffffff;
+  --dark:#2a2118;
+  --light-border:#e8e0d0;
+  --header-h:68px;
+}
+
+/* ─── STICKY HEADER ─── */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(42,33,24,0.96);backdrop-filter:blur(8px);
+  height:var(--header-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+  border-bottom:1px solid rgba(213,157,52,0.3);
+}
+.header-logo{
+  display:flex;flex-direction:column;line-height:1.1;
+}
+.header-logo .hotel-name{
+  font-size:1.1rem;font-weight:600;color:#fff;letter-spacing:0.03em;
+}
+.header-logo .hotel-sub{
+  font-size:0.72rem;color:var(--gold);font-weight:400;letter-spacing:0.12em;text-transform:uppercase;font-style:italic;
+}
+.header-actions{display:flex;align-items:center;gap:12px}
+.header-tel{
+  color:rgba(255,255,255,0.7);font-size:0.82rem;letter-spacing:0.02em;
+  display:none;
+}
+.btn-request{
+  background:var(--gold);color:#fff;
+  font-family:'Crimson Pro',serif;font-size:0.9rem;font-weight:600;
+  padding:10px 22px;border-radius:2px;
+  letter-spacing:0.05em;text-transform:uppercase;
+  transition:background 0.2s,transform 0.15s;
+  white-space:nowrap;
+  border:none;cursor:pointer;
+}
+.btn-request:hover{background:var(--gold-dark);transform:translateY(-1px)}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;height:100svh;min-height:520px;max-height:900px;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding-bottom:60px;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.5) 100%);
+  z-index:1;
+}
+.hero-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 60%;
+  z-index:0;
+  /* Using the panorama image from Algund provided in the repo */
+}
+
+/* Fallback gradient if image fails */
+.hero-img-fallback{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#3a5a2a 0%,#5a7a3a 30%,#8ab060 60%,#c8d8a0 100%);
+  z-index:0;
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;color:#fff;
+  padding:0 20px;
+  max-width:800px;
+}
+.hero-eyebrow{
+  font-size:0.78rem;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;font-style:italic;
+}
+.hero-title{
+  font-size:clamp(2.2rem,6vw,4.2rem);font-weight:300;line-height:1.15;
+  margin-bottom:18px;
+  text-shadow:0 2px 20px rgba(0,0,0,0.4);
+}
+.hero-title em{font-style:italic;font-weight:500;color:var(--gold)}
+.hero-subtitle{
+  font-size:clamp(1rem,2.5vw,1.3rem);font-weight:300;
+  color:rgba(255,255,255,0.88);margin-bottom:32px;
+  max-width:560px;margin-left:auto;margin-right:auto;
+}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-hero-primary{
+  background:var(--gold);color:#fff;
+  font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;
+  padding:14px 32px;border-radius:2px;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:background 0.2s,transform 0.15s;
+}
+.btn-hero-primary:hover{background:var(--gold-dark);transform:translateY(-2px)}
+.btn-hero-secondary{
+  background:transparent;color:#fff;
+  font-family:'Crimson Pro',serif;font-size:1rem;font-weight:400;
+  padding:14px 32px;border-radius:2px;
+  border:1px solid rgba(255,255,255,0.6);
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:border-color 0.2s,background 0.2s;
+}
+.btn-hero-secondary:hover{border-color:#fff;background:rgba(255,255,255,0.08)}
+
+.hero-scroll{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:2;color:rgba(255,255,255,0.5);font-size:0.7rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.hero-scroll-line{width:1px;height:36px;background:rgba(255,255,255,0.3);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(1)}50%{opacity:0.9;transform:scaleY(1.1)}}
+
+/* ─── BADGES ─── */
+.badges-bar{
+  background:#2a2118;padding:20px 24px;
+  display:flex;justify-content:center;align-items:center;
+  gap:clamp(20px,5vw,60px);flex-wrap:wrap;
+}
+.badge-item{text-align:center;color:#fff}
+.badge-score{font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1}
+.badge-platform{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-top:4px}
+.badge-sep{width:1px;height:40px;background:rgba(255,255,255,0.12)}
+
+/* ─── SECTION STYLES ─── */
+.section{padding:clamp(60px,10vw,100px) clamp(20px,5vw,60px)}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-eyebrow{
+  font-size:0.75rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;font-style:italic;
+}
+.section-title{
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:300;line-height:1.2;
+  color:var(--dark);margin-bottom:20px;
+}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-lead{
+  font-size:clamp(1rem,2vw,1.2rem);color:var(--gray);
+  max-width:620px;line-height:1.7;
+}
+.divider{width:48px;height:2px;background:var(--gold);margin:20px 0 30px}
+
+/* ─── INTRO SPLIT ─── */
+.intro-split{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+}
+.intro-text .keywords-list{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;
+}
+.keyword-tag{
+  font-size:0.78rem;padding:5px 14px;border:1px solid var(--light-border);
+  border-radius:20px;color:var(--gray);letter-spacing:0.05em;
+}
+.intro-image-wrap{position:relative}
+.intro-image{
+  width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px;
+}
+.intro-image-badge{
+  position:absolute;bottom:-20px;left:-20px;
+  background:#fff;border:1px solid var(--light-border);
+  padding:16px 20px;border-radius:2px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+}
+.intro-image-badge .badge-num{font-size:2.2rem;font-weight:600;color:var(--gold);line-height:1}
+.intro-image-badge .badge-txt{font-size:0.78rem;color:var(--gray);letter-spacing:0.05em;text-transform:uppercase}
+
+/* ─── FEATURES GRID ─── */
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:2px;margin-top:50px;
+  background:var(--light-border);
+  border:1px solid var(--light-border);
+}
+.feature-card{
+  background:var(--white);padding:36px 28px;
+  transition:background 0.2s;
+}
+.feature-card:hover{background:#fffbf4}
+.feature-icon{font-size:2rem;margin-bottom:16px}
+.feature-title{font-size:1.2rem;font-weight:600;color:var(--dark);margin-bottom:10px}
+.feature-text{font-size:0.95rem;color:var(--gray);line-height:1.65}
+
+/* ─── ROOMS SECTION ─── */
+.rooms-section{background:#2a2118}
+.rooms-section .section-title{color:#fff}
+.rooms-section .section-lead{color:rgba(255,255,255,0.65)}
+.rooms-section .divider{background:var(--gold)}
+.rooms-section .section-eyebrow{color:var(--gold)}
+
+/* Slider */
+.slider-outer{position:relative;overflow:hidden;margin-top:40px}
+.slider-track{
+  display:flex;gap:20px;
+  transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  padding:0 0 4px;
+}
+.room-card{
+  flex:0 0 300px;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(213,157,52,0.2);border-radius:2px;
+  overflow:hidden;cursor:pointer;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.room-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.room-card-img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;
+  background:#3a3028;
+}
+.room-card-body{padding:20px}
+.room-cat{
+  font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.room-name{font-size:1.25rem;font-weight:500;color:#fff;margin-bottom:4px}
+.room-size{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:12px}
+.room-price{
+  font-size:1.1rem;font-weight:600;color:var(--gold);
+}
+.room-price span{font-size:0.8rem;font-weight:400;color:rgba(255,255,255,0.5)}
+.room-btn{
+  display:block;margin-top:14px;
+  text-align:center;padding:10px;
+  border:1px solid rgba(213,157,52,0.5);
+  color:rgba(255,255,255,0.8);font-size:0.82rem;
+  letter-spacing:0.08em;text-transform:uppercase;
+  border-radius:2px;
+  transition:background 0.2s,border-color 0.2s,color 0.2s;
+}
+.room-btn:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+
+.slider-controls{
+  display:flex;gap:12px;margin-top:28px;
+  align-items:center;
+}
+.slider-btn{
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(213,157,52,0.5);
+  background:transparent;color:var(--gold);
+  font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s,border-color 0.2s;
+}
+.slider-btn:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+.slider-dots{display:flex;gap:6px;margin-left:8px}
+.slider-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.25);
+  cursor:pointer;transition:background 0.2s,transform 0.2s;
+}
+.slider-dot.active{background:var(--gold);transform:scale(1.3)}
+
+/* ─── SPA SECTION ─── */
+.spa-section{
+  background:linear-gradient(135deg,#f5efe4 0%,#ede4d3 100%);
+  position:relative;overflow:hidden;
+}
+.spa-section::before{
+  content:'SPA';position:absolute;right:-20px;top:40px;
+  font-size:8rem;font-weight:700;font-style:italic;
+  color:rgba(213,157,52,0.07);letter-spacing:-0.05em;
+  pointer-events:none;
+}
+.spa-split{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+}
+.spa-features{display:flex;flex-direction:column;gap:20px;margin-top:30px}
+.spa-feature{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:16px 20px;background:rgba(255,255,255,0.6);
+  border-radius:2px;border-left:3px solid var(--gold);
+}
+.spa-feature-icon{font-size:1.4rem;flex-shrink:0}
+.spa-feature-text h4{font-size:1rem;font-weight:600;color:var(--dark);margin-bottom:4px}
+.spa-feature-text p{font-size:0.9rem;color:var(--gray);line-height:1.5}
+.spa-new-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:#fff;
+  font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;
+  padding:6px 14px;border-radius:20px;margin-bottom:16px;
+}
+
+/* ─── REGION SECTION ─── */
+.region-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;margin-top:40px;
+}
+.region-card{
+  border:1px solid var(--light-border);border-radius:2px;
+  overflow:hidden;background:#fff;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.region-card:hover{box-shadow:0 12px 40px rgba(0,0,0,0.08);transform:translateY(-3px)}
+.region-card-img{
+  width:100%;aspect-ratio:3/2;object-fit:cover;
+  background:#e8e0d0;
+}
+.region-card-body{padding:18px}
+.region-card-title{font-size:1.1rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.region-card-text{font-size:0.88rem;color:var(--gray);line-height:1.55}
+
+/* ─── ARRIVAL ─── */
+.arrival-section{background:#2a2118}
+.arrival-section .section-title{color:#fff}
+.arrival-section .section-lead{color:rgba(255,255,255,0.65)}
+.arrival-section .divider{background:var(--gold)}
+.arrival-section .section-eyebrow{color:var(--gold)}
+
+.arrival-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;margin-top:40px;
+  background:rgba(255,255,255,0.08);
+}
+.arrival-card{
+  background:#2a2118;padding:32px 24px;
+  border-top:2px solid transparent;
+  transition:border-color 0.2s;
+}
+.arrival-card:hover{border-color:var(--gold)}
+.arrival-icon{font-size:2.2rem;margin-bottom:16px}
+.arrival-title{font-size:1.1rem;font-weight:600;color:#fff;margin-bottom:10px}
+.arrival-text{font-size:0.9rem;color:rgba(255,255,255,0.6);line-height:1.65}
+.arrival-text strong{color:rgba(255,255,255,0.85)}
+
+/* ─── INCLUDED ─── */
+.included-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;margin-top:40px;
+}
+.included-item{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 18px;background:#fff;
+  border-radius:2px;border:1px solid var(--light-border);
+}
+.included-check{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--gold);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;flex-shrink:0;margin-top:2px;
+}
+.included-text{font-size:0.95rem;color:var(--dark);line-height:1.5}
+
+/* ─── ENQUIRY SECTION ─── */
+.enquiry-section{
+  background:linear-gradient(135deg,#2a2118 0%,#3d3025 100%);
+  scroll-margin-top:var(--header-h);
+}
+#anfrage{scroll-margin-top:var(--header-h)}
+.enquiry-section .section-title{color:#fff}
+.enquiry-section .section-lead{color:rgba(255,255,255,0.65)}
+.enquiry-section .divider{background:var(--gold)}
+.enquiry-section .section-eyebrow{color:var(--gold)}
+
+.enquiry-wrap{
+  display:grid;grid-template-columns:1fr 380px;
+  gap:60px;align-items:start;margin-top:40px;
+}
+.enquiry-usp{color:rgba(255,255,255,0.75)}
+.enquiry-usp h3{font-size:1.4rem;font-weight:500;color:#fff;margin-bottom:16px}
+.enquiry-usp ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.enquiry-usp li{
+  display:flex;gap:12px;align-items:flex-start;font-size:0.95rem;line-height:1.55;
+}
+.enquiry-usp li::before{content:'✦';color:var(--gold);flex-shrink:0;margin-top:2px;font-size:0.75rem}
+.enquiry-usp .contact-info{margin-top:32px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.1)}
+.enquiry-usp .contact-info p{font-size:0.9rem;color:rgba(255,255,255,0.55);margin-bottom:4px}
+.enquiry-usp .contact-info a{color:var(--gold);font-size:1rem}
+
+/* ─── FORM STYLING ─── */
+.form-container{
+  background:#fff;padding:32px 28px;border-radius:2px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+}
+.custom-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.full-width{grid-column:span 2}
+.custom-form label{display:block;margin-bottom:5px;font-weight:600;color:#2a2118;font-size:0.82rem;letter-spacing:0.04em;text-transform:uppercase}
+.req::after{content:" *";color:var(--gold)}
+.custom-form input,.custom-form select,.custom-form textarea{
+  width:100%;padding:11px 14px;
+  border:1px solid #dce1e5;border-radius:2px;
+  font-family:'Crimson Pro',serif;font-size:0.95rem;
+  box-sizing:border-box;background:#fff;color:#2a2118;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.custom-form input:focus,.custom-form select:focus,.custom-form textarea:focus{
+  border-color:var(--gold);outline:none;
+  box-shadow:0 0 0 3px rgba(213,157,52,0.12);
+}
+.custom-form input.error,.custom-form select.error{border-color:#c0392b!important}
+.phone-row{display:flex;gap:6px}
+.phone-row select{flex:0 0 auto;width:110px;font-size:0.88rem;padding:11px 6px}
+.phone-row input{flex:1}
+.child-age-field{display:none}
+.privacy-row{
+  grid-column:span 2;display:flex;align-items:flex-start;gap:10px;
+  padding:12px 14px;background:#f8f7f5;border-radius:2px;border:1px solid #e8e6e1;
+}
+.privacy-row input[type="checkbox"]{width:18px;min-width:18px;height:18px;margin-top:2px;cursor:pointer;accent-color:var(--gold)}
+.privacy-row label{font-size:0.8rem;color:#555;font-weight:400;margin:0;cursor:pointer;line-height:1.5}
+.privacy-row label a{color:var(--gold);text-decoration:underline}
+.field-error{font-size:0.78rem;color:#c0392b;margin-top:3px;display:none}
+.submit-btn{
+  grid-column:span 2;
+  background:var(--gold);color:#fff;
+  padding:15px;border:none;border-radius:2px;cursor:pointer;
+  font-family:'Crimson Pro',serif;font-size:1rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  margin-top:4px;transition:background 0.2s,transform 0.15s;
+}
+.submit-btn:hover{background:var(--gold-dark);transform:translateY(-1px)}
+.submit-btn:disabled{background:#ccc;cursor:not-allowed;transform:none}
+.success-msg{
+  display:none;grid-column:span 2;
+  background:#e8f5e9;border:1px solid #a5d6a7;border-radius:2px;
+  padding:14px 16px;color:#2e7d32;font-size:0.95rem;font-weight:500;text-align:center;
+}
+
+/* ─── FOOTER ─── */
+.site-footer{
+  background:#1a140e;color:rgba(255,255,255,0.5);
+  padding:40px clamp(20px,5vw,60px);
+}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;
+  gap:30px;align-items:start;
+}
+.footer-left .footer-hotel{font-size:1rem;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:6px}
+.footer-left p{font-size:0.82rem;line-height:1.7}
+.footer-left a{color:rgba(255,255,255,0.5);transition:color 0.2s}
+.footer-left a:hover{color:var(--gold)}
+.footer-right{text-align:right;font-size:0.82rem}
+.footer-right a{color:rgba(255,255,255,0.5);transition:color 0.2s;display:block;margin-bottom:4px}
+.footer-right a:hover{color:var(--gold)}
+.footer-bottom{
+  max-width:1100px;margin:20px auto 0;
+  padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);
+  font-size:0.78rem;display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(min-width:900px){
+  .header-tel{display:block}
+}
+
+@media(max-width:900px){
+  .intro-split,.spa-split,.enquiry-wrap{grid-template-columns:1fr;gap:40px}
+  .enquiry-wrap{grid-template-columns:1fr}
+  .arrival-grid{grid-template-columns:1fr}
+  .arrival-card{border-top:none;border-left:2px solid transparent}
+  .arrival-card:hover{border-left-color:var(--gold)}
+  .intro-image-badge{bottom:-10px;left:10px}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-right{text-align:left}
+}
+
+@media(max-width:600px){
+  .hero-ctas{flex-direction:column;align-items:center}
+  .btn-hero-primary,.btn-hero-secondary{width:100%;max-width:280px;text-align:center}
+  .badges-bar{gap:20px}
+  .badge-sep{display:none}
+  .custom-form{grid-template-columns:1fr}
+  .full-width,.privacy-row,.submit-btn,.success-msg{grid-column:span 1}
+  .phone-row select{width:90px}
+  .form-container{padding:20px 16px}
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{opacity:0;animation:fadeUp 0.7s ease forwards}
+.fade-in:nth-child(1){animation-delay:0.1s}
+.fade-in:nth-child(2){animation-delay:0.25s}
+.fade-in:nth-child(3){animation-delay:0.4s}
+
+/* Intersection observer classes */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     STICKY HEADER
+════════════════════════════════════════ -->
+<header class="site-header">
+  <a href="#" class="header-logo">
+    <span class="hotel-name">Hotel Maria Theresia</span>
+    <span class="hotel-sub">4★ · Algund · South Tyrol</span>
+  </a>
+  <div class="header-actions">
+    <a href="tel:+390473443251" class="header-tel">+39 0473 443 251</a>
+    <a href="#anfrage" class="btn-request">Request Now</a>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-img-fallback"></div>
+  <img
+    class="hero-img"
+    src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/(C)%20Hannes%20Niederkofler_WEB-0186%20Algund%20Panorama%20Herbst.jpg"
+    alt="Algund panorama – Hotel Maria Theresia South Tyrol"
+    loading="eager"
+    decoding="async"
+    onerror="this.style.display='none'"
+  >
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow fade-in">South Tyrol · Algund near Merano · Adults Only</p>
+    <h1 class="hero-title fade-in">Escape to <em>Italy's</em><br>Alpine Secret</h1>
+    <p class="hero-subtitle fade-in">A 4-star retreat where Mediterranean warmth meets Alpine tranquility — just 2 hours from any airport, a world away from ordinary.</p>
+    <div class="hero-ctas fade-in">
+      <a href="#anfrage" class="btn-hero-primary">Request Your Stay</a>
+      <a href="#rooms" class="btn-hero-secondary">Explore Rooms</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Discover</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     RATING BADGES
+════════════════════════════════════════ -->
+<div class="badges-bar">
+  <div class="badge-item">
+    <div class="badge-score">9.2</div>
+    <div class="badge-platform">Booking.com</div>
+  </div>
+  <div class="badge-sep"></div>
+  <div class="badge-item">
+    <div class="badge-score">4.5</div>
+    <div class="badge-platform">Tripadvisor</div>
+  </div>
+  <div class="badge-sep"></div>
+  <div class="badge-item">
+    <div class="badge-score">4.9</div>
+    <div class="badge-platform">Google</div>
+  </div>
+  <div class="badge-sep"></div>
+  <div class="badge-item">
+    <div class="badge-score">4★</div>
+    <div class="badge-platform">Adults Only</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     INTRO SECTION
+════════════════════════════════════════ -->
+<section class="section" style="background:#fff">
+  <div class="section-inner">
+    <div class="intro-split">
+      <div class="intro-text reveal">
+        <p class="section-eyebrow">The Hotel</p>
+        <h2 class="section-title">Your Alpine escape — <em>designed for those who know what they want</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">
+          Nestled above Merano in the sun-kissed village of Algund, Hotel Maria Theresia is a place where quality triumphs over compromise. An adults-only 4-star hotel where every detail is crafted around you — from your morning newspaper delivered to your door to the pillow menu that guarantees the perfect night's sleep.
+        </p>
+        <p style="color:var(--gray);margin-top:16px;font-size:0.95rem;line-height:1.7">
+          Terraced vineyards, apple orchards, and the scent of roses frame every view. This is South Tyrol at its finest — still authentic, utterly unhurried, and waiting to be discovered by travellers from the Netherlands, Belgium, and Denmark.
+        </p>
+        <div class="keywords-list">
+          <span class="keyword-tag">Algund holiday</span>
+          <span class="keyword-tag">Merano hotel 4 star</span>
+          <span class="keyword-tag">South Tyrol wellness</span>
+          <span class="keyword-tag">Adults only Italy</span>
+          <span class="keyword-tag">Hotel near Merano</span>
+          <span class="keyword-tag">Alpine spa holiday</span>
+        </div>
+      </div>
+      <div class="intro-image-wrap reveal">
+        <img
+          class="intro-image"
+          src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/030_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_6573-2545.jpg"
+          alt="Hotel Maria Theresia garden and terrace"
+          loading="lazy"
+          onerror="this.style.background='#e8e0d0'"
+        >
+        <div class="intro-image-badge">
+          <div class="badge-num">26</div>
+          <div class="badge-txt">years of hospitality</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature highlights -->
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon">🌡️</div>
+        <div class="feature-title">Indoor & Outdoor Pools</div>
+        <div class="feature-text">Swim at 34°C in our heated indoor pool, then soak in the outdoor pool with panoramic mountain views stretching across the Merano valley.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🍽️</div>
+        <div class="feature-title">Culinary Excellence</div>
+        <div class="feature-text">Wake to a lavish Tyrolean-Mediterranean breakfast buffet. Evenings bring 4-course dinners with seasonal local ingredients — candles, wine, and no rush.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏔️</div>
+        <div class="feature-title">Hiking & Cycling</div>
+        <div class="feature-text">Step out of the hotel directly onto the legendary Waalwege trails and riverside cycling paths through vineyards. Free e-bikes available.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌹</div>
+        <div class="feature-title">Rose Garden & Terrace</div>
+        <div class="feature-text">Merano is famous for its rose gardens. Unwind on our sunny panoramic terrace as the mountains glow at sunset with a glass of local wine.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     ROOMS SLIDER
+════════════════════════════════════════ -->
+<section class="section rooms-section" id="rooms">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Rooms & Suites</p>
+    <h2 class="section-title reveal">Your home above <em>the valley</em></h2>
+    <div class="divider reveal"></div>
+    <p class="section-lead reveal">Each room is a sanctuary — panoramic views, quality bedding, and our signature pillow menu. From cosy double rooms to generous panorama suites, every space is designed to help you truly rest.</p>
+
+    <div class="slider-outer reveal">
+      <div class="slider-track" id="sliderTrack">
+
+        <!-- Room cards - each with request link -->
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/001_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3914.jpg"
+            alt="Felicitas Double Room" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Double Room</div>
+            <div class="room-name">Felicitas</div>
+            <div class="room-size">18 – 23 m²</div>
+            <div class="room-price">from €135 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/006_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_5781-121.jpg"
+            alt="Rosmarin chic Double Room" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Double Room</div>
+            <div class="room-name">Rosmarin "chic"</div>
+            <div class="room-size">approx. 28 m²</div>
+            <div class="room-price">from €145 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/020_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3948.jpg"
+            alt="Maria Theresia stil Panorama Room" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Panorama Room</div>
+            <div class="room-name">Maria Theresia "stil"</div>
+            <div class="room-size">24 – 30 m²</div>
+            <div class="room-price">from €150 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/030_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_6573-2545.jpg"
+            alt="Maria Theresia chic Panorama Room" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Panorama Room</div>
+            <div class="room-name">Maria Theresia "chic"</div>
+            <div class="room-size">27 m²</div>
+            <div class="room-price">from €150 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/035_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_6413-2753.jpg"
+            alt="Maria Theresia NEW style" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Panorama Room</div>
+            <div class="room-name">Maria Theresia NEW "style"</div>
+            <div class="room-size">approx. 25 m²</div>
+            <div class="room-price">On Request</div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/044_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3995.jpg"
+            alt="Jasmin Junior Suite" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Junior Suite</div>
+            <div class="room-name">Jasmin</div>
+            <div class="room-size">approx. 38 m²</div>
+            <div class="room-price">from €165 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/066_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_4032.jpg"
+            alt="Mandarin Junior Suite" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Junior Suite</div>
+            <div class="room-name">Mandarin</div>
+            <div class="room-size">approx. 36 m²</div>
+            <div class="room-price">from €175 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/079_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_7259-1746.jpg"
+            alt="Lavendel Romantic Suite" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Romantic Suite</div>
+            <div class="room-name">Lavendel</div>
+            <div class="room-size">approx. 42 m²</div>
+            <div class="room-price">from €170 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/107_maria-theresia_%C2%A9KOTTERSTEGER_250918_KOT_7629-550.jpg"
+            alt="Thymian Mediterranean Suite" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Mediterranean Suite</div>
+            <div class="room-name">Thymian</div>
+            <div class="room-size">approx. 46 m²</div>
+            <div class="room-price">from €175 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+        <div class="room-card">
+          <img class="room-card-img"
+            src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/110_maria-theresia_%C2%A9KOTTERSTEGER_250918_DJI_0989-10.jpg"
+            alt="Zypresse Panorama Suite" loading="lazy" onerror="this.style.background='#3a3028'">
+          <div class="room-card-body">
+            <div class="room-cat">Panorama Suite</div>
+            <div class="room-name">Zypresse</div>
+            <div class="room-size">approx. 54 m²</div>
+            <div class="room-price">from €185 <span>/ night</span></div>
+            <a href="#anfrage" class="room-btn">Request This Room</a>
+          </div>
+        </div>
+
+      </div><!-- /slider-track -->
+    </div>
+
+    <div class="slider-controls reveal">
+      <button class="slider-btn" id="sliderPrev" aria-label="Previous">&#8592;</button>
+      <button class="slider-btn" id="sliderNext" aria-label="Next">&#8594;</button>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     NEW SPA SECTION
+════════════════════════════════════════ -->
+<section class="section spa-section">
+  <div class="section-inner">
+    <div class="spa-split">
+      <div class="reveal">
+        <span class="spa-new-badge">✨ New 2025</span>
+        <p class="section-eyebrow">Wellness & Spa</p>
+        <h2 class="section-title">Your sanctuary <em>above the mountains</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">
+          Our newly expanded wellness area invites you to slow down completely. Whether you seek the gentle heat of the bio sauna, the alpine clarity of the outdoor Finnish sauna, or the deep relaxation of a therapeutic treatment — this is where the holiday truly begins.
+        </p>
+        <div class="spa-features">
+          <div class="spa-feature">
+            <div class="spa-feature-icon">♨️</div>
+            <div class="spa-feature-text">
+              <h4>Bio Sauna & Finnish Outdoor Sauna</h4>
+              <p>Two sauna experiences — one gentle and aromatic, one with mountain air views. Both invite complete surrender.</p>
+            </div>
+          </div>
+          <div class="spa-feature">
+            <div class="spa-feature-icon">💧</div>
+            <div class="spa-feature-text">
+              <h4>34°C Indoor Pool & Outdoor Pool</h4>
+              <p>Year-round comfort in the heated indoor pool, plus outdoor swimming with panoramic Alpine views.</p>
+            </div>
+          </div>
+          <div class="spa-feature">
+            <div class="spa-feature-icon">🌿</div>
+            <div class="spa-feature-text">
+              <h4>Alpine Treatments</h4>
+              <p>Massages and treatments with arnica, mountain herbs, and locally sourced ingredients from South Tyrol's nature.</p>
+            </div>
+          </div>
+          <div class="spa-feature">
+            <div class="spa-feature-icon">🛁</div>
+            <div class="spa-feature-text">
+              <h4>Steam Bath & Whirlpool</h4>
+              <p>Aromatic steam rooms and a rejuvenating whirlpool complete your wellness journey.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <img
+          src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/037_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3975.jpg"
+          alt="Hotel Maria Theresia spa and wellness"
+          style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:2px"
+          loading="lazy"
+          onerror="this.style.background='#e8e0d0'"
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     REGION / WHY ALGUND
+════════════════════════════════════════ -->
+<section class="section" style="background:#fff">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">The Destination</p>
+    <h2 class="section-title reveal">Why Algund? <em>Because Merano was just the beginning.</em></h2>
+    <div class="divider reveal"></div>
+    <p class="section-lead reveal">
+      Sitting 350 m above Merano, Algund is one of South Tyrol's best-kept secrets — a sun-blessed village where Mediterranean palms meet Alpine peaks, and where the pace of life is exactly what you need it to be.
+    </p>
+
+    <div class="region-grid reveal">
+      <div class="region-card">
+        <div class="region-card-img" style="background:linear-gradient(135deg,#8ab060,#5a7a3a);display:flex;align-items:center;justify-content:center;font-size:3rem">🍷</div>
+        <div class="region-card-body">
+          <div class="region-card-title">Wine & Orchards</div>
+          <div class="region-card-text">Walk through the Sonnenberg vineyard trail and taste some of Italy's finest Alto Adige wines. Apple orchards stretch as far as the eye can see.</div>
+        </div>
+      </div>
+      <div class="region-card">
+        <div class="region-card-img" style="background:linear-gradient(135deg,#6098c0,#3a6a90);display:flex;align-items:center;justify-content:center;font-size:3rem">🏛️</div>
+        <div class="region-card-body">
+          <div class="region-card-title">Merano City & Thermal Baths</div>
+          <div class="region-card-text">Just minutes from the hotel: the stunning Terme Merano thermal baths, the historic promenade, and excellent restaurants and shopping.</div>
+        </div>
+      </div>
+      <div class="region-card">
+        <div class="region-card-img" style="background:linear-gradient(135deg,#80a870,#4a7840);display:flex;align-items:center;justify-content:center;font-size:3rem">🚶</div>
+        <div class="region-card-body">
+          <div class="region-card-title">Waalwege Irrigation Trails</div>
+          <div class="region-card-text">These ancient irrigation channels create magical walking paths through the landscape — flat, shaded, and utterly tranquil. A South Tyrolean icon.</div>
+        </div>
+      </div>
+      <div class="region-card">
+        <div class="region-card-img" style="background:linear-gradient(135deg,#c09060,#907040);display:flex;align-items:center;justify-content:center;font-size:3rem">🎫</div>
+        <div class="region-card-body">
+          <div class="region-card-title">AlgundCard Included</div>
+          <div class="region-card-text">Free public transport across South Tyrol, free cable cars, and discounts on pools, gardens, and attractions — all included in your stay.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     HOW TO GET HERE
+════════════════════════════════════════ -->
+<section class="section arrival-section">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Getting Here</p>
+    <h2 class="section-title reveal">Closer than you think — <em>from the Netherlands, Belgium & Denmark</em></h2>
+    <div class="divider reveal"></div>
+    <p class="section-lead reveal">Whether you prefer the freedom of the road, the ease of a flight, or the romance of the train, Algund is surprisingly accessible from northern Europe.</p>
+
+    <div class="arrival-grid reveal">
+      <div class="arrival-card">
+        <div class="arrival-icon">🚗</div>
+        <div class="arrival-title">By Car</div>
+        <div class="arrival-text">
+          From <strong>Amsterdam, Brussels, or Copenhagen</strong>, it's a scenic drive of roughly 1,000 – 1,400 km — mostly highway. Take the A22 Brenner motorway through Austria, exit at <strong>Bolzano-Sud</strong>, then the MEBO expressway to the Lagundo exit. Only 5 minutes to the hotel. <strong>Free parking</strong> included.
+        </div>
+      </div>
+      <div class="arrival-card">
+        <div class="arrival-icon">✈️</div>
+        <div class="arrival-title">By Plane</div>
+        <div class="arrival-text">
+          Seasonal <strong>direct flights from Amsterdam (AMS)</strong> to Verona or Innsbruck. From either airport, it's a beautiful 1.5–2 hour drive through the Alps to Algund. Brussels (BRU) and Copenhagen (CPH) also connect well via Verona, Munich, or Innsbruck.
+        </div>
+      </div>
+      <div class="arrival-card">
+        <div class="arrival-icon">🚂</div>
+        <div class="arrival-title">By Train</div>
+        <div class="arrival-text">
+          Travel via major hubs like <strong>Munich or Innsbruck</strong> to <strong>Merano station</strong>. From there, local buses (213 or 235) reach Algund in about 10 minutes — no car required for the whole journey. A scenic and stress-free alternative.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     INCLUDED SERVICES
+════════════════════════════════════════ -->
+<section class="section" style="background:#f5efe4">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">All Included</p>
+    <h2 class="section-title reveal">Everything you need — <em>nothing to worry about</em></h2>
+    <div class="divider reveal"></div>
+
+    <div class="included-grid reveal">
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Free use of indoor & outdoor pools and whirlpool</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Access to the new Alpine sauna area (bio sauna, outdoor Finnish sauna, steam bath)</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Wellness bag with bathrobe, slippers & towels for your stay</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text"><strong>AlgundCard</strong>: free public transport, cable cars, museums & more</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Rich breakfast buffet (7:30–10:30 AM) with local Tyrolean specialties</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">4-course dinner with Mediterranean-Tyrolean cuisine</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Free rental of mountain bikes & e-bikes</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Weekly guided hikes, tastings & excursion programme</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Free parking in our hotel garage</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Free Wi-Fi throughout the entire property</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Daily newspaper of your choice delivered to your room</div>
+      </div>
+      <div class="included-item">
+        <div class="included-check">✓</div>
+        <div class="included-text">Signature pillow menu for your perfect night's sleep</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     ENQUIRY FORM
+════════════════════════════════════════ -->
+<section class="section enquiry-section" id="anfrage">
+  <div class="section-inner">
+    <p class="section-eyebrow">Request Your Stay</p>
+    <h2 class="section-title">Ready to discover <em>South Tyrol?</em></h2>
+    <div class="divider"></div>
+
+    <div class="enquiry-wrap">
+      <div class="enquiry-usp reveal">
+        <h3>We'll get back to you within 24 hours</h3>
+        <ul>
+          <li>Non-binding enquiry — no payment required now</li>
+          <li>Personal reply from our team, not an automated system</li>
+          <li>Flexible packages tailored to your travel dates</li>
+          <li>We speak English — feel at home from the first message</li>
+          <li>Free cancellation up to 3 weeks before arrival</li>
+        </ul>
+        <div class="contact-info">
+          <p>Prefer to call or email directly?</p>
+          <a href="tel:+390473443251">+39 0473 443 251</a>
+          <a href="mailto:info@mariatheresia.it" style="color:rgba(255,255,255,0.5);font-size:0.9rem;margin-top:4px;display:block">info@mariatheresia.it</a>
+          <p style="margin-top:16px">Rosengartenstraße 10 · I-39022 Algund near Merano · South Tyrol · Italy</p>
+        </div>
+      </div>
+
+      <div class="form-container reveal">
+        <!-- FORM INJECTED FROM PROVIDED HTML -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+        <form id="bookingForm" class="custom-form" novalidate>
+          <input type="hidden" id="hLanguage" name="language" value="EN">
+
+          <div class="m-side">
+            <label class="req" for="ankunft">Arrival</label>
+            <input type="text" id="ankunft" placeholder="dd.mm.yyyy" required>
+            <div class="field-error" id="errAnkunft">Please select an arrival date.</div>
+          </div>
+          <div class="m-side">
+            <label class="req" for="abreise">Departure</label>
+            <input type="text" id="abreise" placeholder="dd.mm.yyyy" required>
+            <div class="field-error" id="errAbreise">Please select a departure date.</div>
+          </div>
+
+          <div class="full-width">
+            <label for="zimmer">Preferred Room (optional)</label>
+            <select id="zimmer">
+              <option value="">-- No preference --</option>
+              <optgroup label="Double Room">
+                <option value="Felicitas">Felicitas – from €135</option>
+                <option value="Rosmarin chic">Rosmarin "chic" – from €145</option>
+              </optgroup>
+              <optgroup label="Panorama Room">
+                <option value="Maria Theresia stil">Maria Theresia "stil" – from €150</option>
+                <option value="Maria Theresia chic">Maria Theresia "chic" – from €150</option>
+                <option value="Maria Theresia NEW style">Maria Theresia NEW "style" – on request</option>
+              </optgroup>
+              <optgroup label="Junior Suite">
+                <option value="Jasmin">Jasmin – from €165</option>
+                <option value="Mandarin">Mandarin – from €175</option>
+              </optgroup>
+              <optgroup label="Romantic Suite">
+                <option value="Lavendel">Lavendel – from €170</option>
+              </optgroup>
+              <optgroup label="Mediterranean Suite">
+                <option value="Thymian">Thymian – from €175</option>
+              </optgroup>
+              <optgroup label="Panorama Suite">
+                <option value="Zypresse">Zypresse – from €185</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="m-side">
+            <label for="erwachsene">Adults</label>
+            <select id="erwachsene">
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <div class="m-side">
+            <label for="kCount">Children</label>
+            <select id="kCount">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+          <div id="k1" class="child-age-field m-side"><label class="req">Age child 1</label><input type="number" name="alter_k1" min="0" max="17"></div>
+          <div id="k2" class="child-age-field m-side"><label class="req">Age child 2</label><input type="number" name="alter_k2" min="0" max="17"></div>
+          <div id="k3" class="child-age-field m-side"><label class="req">Age child 3</label><input type="number" name="alter_k3" min="0" max="17"></div>
+          <div id="k4" class="child-age-field m-side"><label class="req">Age child 4</label><input type="number" name="alter_k4" min="0" max="17"></div>
+          <div id="k5" class="child-age-field m-side"><label class="req">Age child 5</label><input type="number" name="alter_k5" min="0" max="17"></div>
+
+          <div class="m-side">
+            <label class="req" for="vorname">First name</label>
+            <input type="text" id="vorname" required>
+            <div class="field-error" id="errVorname">Please enter your first name.</div>
+          </div>
+          <div class="m-side">
+            <label class="req" for="nachname">Last name</label>
+            <input type="text" id="nachname" required>
+            <div class="field-error" id="errNachname">Please enter your last name.</div>
+          </div>
+
+          <div class="full-width">
+            <label class="req" for="email">E-Mail</label>
+            <input type="email" id="email" required>
+            <div class="field-error" id="errEmail">Please enter a valid e-mail address.</div>
+          </div>
+
+          <div class="full-width">
+            <label class="req">Phone</label>
+            <div class="phone-row">
+              <select id="phonePrefix">
+                <option value="0031">🇳🇱 +31</option>
+                <option value="0032">🇧🇪 +32</option>
+                <option value="0045">🇩🇰 +45</option>
+                <option value="0049">🇩🇪 +49</option>
+                <option value="0043">🇦🇹 +43</option>
+                <option value="0039">🇮🇹 +39</option>
+                <option value="0041">🇨🇭 +41</option>
+                <option value="0044">🇬🇧 +44</option>
+                <option value="0046">🇸🇪 +46</option>
+                <option value="0047">🇳🇴 +47</option>
+                <option value="00420">🇨🇿 +420</option>
+                <option value="001">🇺🇸 +1</option>
+              </select>
+              <input type="tel" id="phoneNumber" placeholder="6 12 34 56 78" inputmode="numeric" pattern="[0-9 ]*">
+            </div>
+            <div class="field-error" id="errTelefon">Please enter your phone number.</div>
+          </div>
+
+          <div class="full-width">
+            <label for="nachricht">Message (optional)</label>
+            <textarea id="nachricht" rows="3" placeholder="Any special wishes, preferred room type, or questions…"></textarea>
+          </div>
+
+          <div class="privacy-row">
+            <input type="checkbox" id="privacy" required>
+            <label for="privacy">I have read the <a href="https://www.mariatheresia.it/de/servicenavigation/privacy-cookies/" target="_blank" rel="noopener">privacy policy</a> and agree to the processing of my data for the handling of my enquiry. *</label>
+          </div>
+          <div class="field-error full-width" id="errPrivacy" style="margin-top:-8px">Please accept the privacy policy.</div>
+
+          <div class="success-msg" id="successMsg">✅ Thank you! Your enquiry has been sent successfully.<br>We will get back to you as soon as possible.</div>
+          <button type="submit" class="submit-btn" id="sBtn">Send Non-Binding Enquiry</button>
+        </form>
+      </div><!-- /form-container -->
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-hotel">Hotel Maria Theresia · Algund near Merano</div>
+      <p>Rosengartenstraße 10 · I-39022 Algund · South Tyrol · Italy</p>
+      <p><a href="tel:+390473443251">+39 0473 443 251</a> · <a href="mailto:info@mariatheresia.it">info@mariatheresia.it</a></p>
+      <p style="margin-top:10px">© 2026 Rosenhotel Maria Theresia Des Kuen Wolfgang & Co. Kg · MwSt. 2616020216 · CIN: IT021038A1XERO9UJP</p>
+    </div>
+    <div class="footer-right">
+      <a href="https://www.mariatheresia.it/de/servicenavigation/privacy-cookies/" target="_blank" rel="noopener">Privacy & Cookies</a>
+      <a href="https://www.mariatheresia.it/de/" target="_blank" rel="noopener">Main Website</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>Managed by <a href="https://outofthebox-media.com" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3)">Out of the Box Media</a></span>
+    <span>Hotel Maria Theresia · 4★ Adults Only · South Tyrol, Italy</span>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+/* ─── UTM CAPTURE ─── */
+(function captureUtm(){
+  var p=new URLSearchParams(window.location.search),
+      src=p.get("utm_source")||"",
+      med=p.get("utm_medium")||"",
+      gcl=p.get("gclid")||"";
+  if(src||med||gcl){
+    var content=p.get("utm_content")||"",device="";
+    if(content.indexOf("_")!==-1) device=content.substring(content.lastIndexOf("_")+1);
+    try{
+      localStorage.setItem("guestflow_utm",JSON.stringify({
+        utm_source:src,utm_medium:med,
+        utm_campaign:p.get("utm_campaign")||"",
+        utm_term:p.get("utm_term")||"",
+        utm_content:content,device:device,
+        gclid:gcl,
+        gad_source:p.get("gad_source")||"",
+        gad_campaignid:p.get("gad_campaignid")||""
+      }));
+    }catch(e){}
+  }
+})();
+
+function getUtm(){try{return JSON.parse(localStorage.getItem("guestflow_utm")||"{}");}catch(e){return{};}}
+
+/* ─── DATEPICKER ─── */
+document.addEventListener("DOMContentLoaded",function(){
+  var aP=flatpickr("#ankunft",{
+    dateFormat:"d.m.Y",minDate:"today",
+    onChange:function(d){
+      if(!d[0])return;
+      var next=new Date(d[0]);next.setDate(next.getDate()+1);
+      bP.set("minDate",next);
+      if(!bP.selectedDates[0]||bP.selectedDates[0]<=d[0])bP.setDate(next);
+    }
+  });
+  var bP=flatpickr("#abreise",{dateFormat:"d.m.Y",minDate:"today"});
+
+  /* ─── CHILDREN FIELDS ─── */
+  document.getElementById("kCount").addEventListener("change",function(){
+    var n=parseInt(this.value);
+    for(var i=1;i<=5;i++){
+      var f=document.getElementById("k"+i),inp=f.querySelector("input");
+      if(i<=n){f.style.display="block";inp.required=true;}
+      else{f.style.display="none";inp.required=false;inp.value="";}
+    }
+  });
+
+  /* ─── PHONE ─── */
+  document.getElementById("phoneNumber").addEventListener("input",function(){
+    this.value=this.value.replace(/[^0-9 ]/g,"");
+  });
+
+  /* ─── HELPERS ─── */
+  function buildPhone(){
+    var prefix=document.getElementById("phonePrefix").value,
+        number=document.getElementById("phoneNumber").value;
+    number=number.replace(/\s/g,"").replace(/^0+/,"");
+    return prefix+number;
+  }
+  function toIsoDate(raw){
+    if(!raw)return"";
+    var m=raw.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+    if(m)return m[3]+"-"+m[2].padStart(2,"0")+"-"+m[1].padStart(2,"0");
+    return raw;
+  }
+  function showError(id,show){var el=document.getElementById(id);if(el)el.style.display=show?"block":"none";}
+  function markField(id,error){var el=document.getElementById(id);if(el){if(error)el.classList.add("error");else el.classList.remove("error");}}
+
+  /* ─── VALIDATION ─── */
+  function validate(){
+    var ok=true;
+    var ankunft=document.getElementById("ankunft").value;showError("errAnkunft",!ankunft);markField("ankunft",!ankunft);if(!ankunft)ok=false;
+    var abreise=document.getElementById("abreise").value;showError("errAbreise",!abreise);markField("abreise",!abreise);if(!abreise)ok=false;
+    var vorname=document.getElementById("vorname").value.trim();showError("errVorname",!vorname);markField("vorname",!vorname);if(!vorname)ok=false;
+    var nachname=document.getElementById("nachname").value.trim();showError("errNachname",!nachname);markField("nachname",!nachname);if(!nachname)ok=false;
+    var email=document.getElementById("email").value.trim();var emailOk=email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);showError("errEmail",!emailOk);markField("email",!emailOk);if(!emailOk)ok=false;
+    var phoneNum=document.getElementById("phoneNumber").value.replace(/\s/g,"");showError("errTelefon",!phoneNum);document.getElementById("phoneNumber").classList.toggle("error",!phoneNum);if(!phoneNum)ok=false;
+    var kinder=parseInt(document.getElementById("kCount").value)||0;
+    for(var i=1;i<=kinder;i++){
+      var ageInp=document.querySelector("[name='alter_k"+i+"']");
+      var ageOk=ageInp&&ageInp.value!==""&&parseInt(ageInp.value)>=0;
+      if(ageInp){if(!ageOk)ageInp.classList.add("error");else ageInp.classList.remove("error");}
+      if(!ageOk)ok=false;
+    }
+    var privacy=document.getElementById("privacy").checked;showError("errPrivacy",!privacy);if(!privacy)ok=false;
+    return ok;
+  }
+
+  /* ─── SUBMIT ─── */
+  document.getElementById("bookingForm").addEventListener("submit",function(e){
+    e.preventDefault();if(!validate())return;
+    var btn=document.getElementById("sBtn");btn.innerText="Sending…";btn.disabled=true;
+    var kinder=parseInt(document.getElementById("kCount").value)||0,ages=[];
+    for(var i=1;i<=kinder;i++){var v=document.querySelector("[name='alter_k"+i+"']");if(v&&v.value!=="")ages.push(v.value);}
+    var utm=getUtm();
+    var payload={
+      hotel_slug:"hotel-maria-theresia",
+      firstname:document.getElementById("vorname").value.trim(),
+      lastname:document.getElementById("nachname").value.trim(),
+      email:document.getElementById("email").value.trim(),
+      phone:buildPhone(),
+      checkin:toIsoDate(document.getElementById("ankunft").value),
+      checkout:toIsoDate(document.getElementById("abreise").value),
+      adults:parseInt(document.getElementById("erwachsene").value)||2,
+      children:kinder,
+      children_ages:ages.join(", "),
+      message:document.getElementById("nachricht").value.trim(),
+      room_type:document.getElementById("zimmer").value||"",
+      language:"EN",
+      utm_source:utm.utm_source||"",utm_medium:utm.utm_medium||"",
+      utm_campaign:utm.utm_campaign||"",utm_term:utm.utm_term||"",
+      utm_content:utm.utm_content||"",device:utm.device||"",
+      gclid:utm.gclid||"",gad_source:utm.gad_source||"",gad_campaignid:utm.gad_campaignid||""
+    };
+    fetch("https://dashboard.outofthebox-media.com/api/lead",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    })
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data&&data.success){
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:"form_lead_success",form_data:{room:payload.room_type,guests:payload.adults,lead_id:data.id,device:payload.device}});
+        document.getElementById("successMsg").style.display="block";
+        btn.style.display="none";
+        try{localStorage.removeItem("guestflow_utm");}catch(e){}
+      } else {
+        alert("An error occurred. Please try again.");
+        btn.innerText="Send Non-Binding Enquiry";btn.disabled=false;
+      }
+    })
+    .catch(function(){
+      alert("Network error. Please try again.");
+      btn.innerText="Send Non-Binding Enquiry";btn.disabled=false;
+    });
+  });
+
+  /* ─── ROOM SLIDER ─── */
+  var track=document.getElementById("sliderTrack");
+  var cards=track.querySelectorAll(".room-card");
+  var dotsContainer=document.getElementById("sliderDots");
+  var totalCards=cards.length;
+  var currentIdx=0;
+
+  function getVisible(){
+    var w=window.innerWidth;
+    if(w>=1024)return 3;
+    if(w>=640)return 2;
+    return 1;
+  }
+
+  function maxIdx(){return Math.max(0,totalCards-getVisible());}
+
+  function buildDots(){
+    dotsContainer.innerHTML="";
+    var pages=maxIdx()+1;
+    for(var i=0;i<pages;i++){
+      var d=document.createElement("button");
+      d.className="slider-dot"+(i===currentIdx?" active":"");
+      d.setAttribute("aria-label","Page "+(i+1));
+      (function(idx){d.addEventListener("click",function(){goTo(idx);});})(i);
+      dotsContainer.appendChild(d);
+    }
+  }
+
+  function goTo(idx){
+    currentIdx=Math.max(0,Math.min(idx,maxIdx()));
+    var cardW=cards[0].offsetWidth+20;
+    track.style.transform="translateX(-"+(currentIdx*cardW)+"px)";
+    document.querySelectorAll(".slider-dot").forEach(function(d,i){
+      d.classList.toggle("active",i===currentIdx);
+    });
+  }
+
+  document.getElementById("sliderPrev").addEventListener("click",function(){goTo(currentIdx-1);});
+  document.getElementById("sliderNext").addEventListener("click",function(){goTo(currentIdx+1);});
+  window.addEventListener("resize",function(){currentIdx=Math.min(currentIdx,maxIdx());buildDots();goTo(currentIdx);});
+
+  buildDots();
+
+  /* ─── INTERSECTION OBSERVER (reveal) ─── */
+  var reveals=document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){entry.target.classList.add("visible");obs.unobserve(entry.target);}
+      });
+    },{threshold:0.12});
+    reveals.forEach(function(el){obs.observe(el);});
+  } else {
+    reveals.forEach(function(el){el.classList.add("visible");});
+  }
+});
+</script>
+
+</body>
+</html>
