@@ -1091,38 +1091,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = 'Sending…';
 
-    /* UTM tracking */
+    /* UTM tracking – Key muss mit GuestFlow übereinstimmen: 'guestflow_utm' */
     let utm = {};
-    try { utm = JSON.parse(localStorage.getItem('utm_params') || '{}'); } catch(x) {}
+    try { utm = JSON.parse(localStorage.getItem('guestflow_utm') || '{}'); } catch(x) {}
 
-    const childrenCount = parseInt(document.getElementById('children').value);
+    const childrenCount = parseInt(document.getElementById('children').value) || 0;
     const childAges = [];
     for (let i = 1; i <= childrenCount; i++) {
       const v = document.getElementById('childAge' + i + 'Input')?.value;
       if (v) childAges.push(v);
     }
 
+    /* Datum von Flatpickr (dd.mm.yyyy) → ISO (yyyy-mm-dd) für API */
+    function toIso(raw) {
+      if (!raw) return '';
+      var m = raw.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+      if (m) return m[3] + '-' + m[2].padStart(2,'0') + '-' + m[1].padStart(2,'0');
+      return raw;
+    }
+
     const payload = {
-      hotel_slug:  'hotel-maria-theresia',
-      source:      'google-ads-lp-en',
-      arrival:     document.getElementById('arrival').value,
-      departure:   document.getElementById('departure').value,
-      room:        document.getElementById('room').value,
-      adults:      document.getElementById('adults').value,
-      children:    document.getElementById('children').value,
-      child_ages:  childAges,
-      first_name:  document.getElementById('fname').value.trim(),
-      last_name:   document.getElementById('lname').value.trim(),
-      email:       document.getElementById('email').value.trim(),
-      phone:       document.getElementById('phoneCode').value + document.getElementById('phone').value.trim(),
-      message:     document.getElementById('message').value.trim(),
-      utm_source:  utm.utm_source  || '',
-      utm_medium:  utm.utm_medium  || '',
-      utm_campaign:utm.utm_campaign|| '',
-      utm_term:    utm.utm_term    || '',
-      utm_content: utm.utm_content || '',
-      page_url:    window.location.href,
-      submitted_at:new Date().toISOString()
+      hotel_slug:     'hotel-maria-theresia',
+      /* Felder exakt wie GuestFlow API erwartet */
+      firstname:      document.getElementById('fname').value.trim(),
+      lastname:       document.getElementById('lname').value.trim(),
+      email:          document.getElementById('email').value.trim(),
+      phone:          document.getElementById('phoneCode').value + document.getElementById('phone').value.trim(),
+      checkin:        toIso(document.getElementById('arrival').value),
+      checkout:       toIso(document.getElementById('departure').value),
+      adults:         parseInt(document.getElementById('adults').value) || 2,
+      children:       childrenCount,
+      children_ages:  childAges.join(', '),
+      room_type:      document.getElementById('room').value || '',
+      message:        document.getElementById('message').value.trim(),
+      language:       'EN',
+      /* UTM + GCLID */
+      utm_source:     utm.utm_source     || '',
+      utm_medium:     utm.utm_medium     || '',
+      utm_campaign:   utm.utm_campaign   || '',
+      utm_term:       utm.utm_term       || '',
+      utm_content:    utm.utm_content    || '',
+      device:         utm.device         || '',
+      gclid:          utm.gclid          || '',
+      gad_source:     utm.gad_source     || '',
+      gad_campaignid: utm.gad_campaignid || '',
     };
 
     try {
@@ -1145,11 +1157,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   /* ── UTM capture ── */
   (function() {
     try {
-      const p = new URLSearchParams(window.location.search);
-      const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
-      const obj = {};
-      keys.forEach(k => { if (p.get(k)) obj[k] = p.get(k); });
-      if (Object.keys(obj).length) localStorage.setItem('utm_params', JSON.stringify(obj));
+      var p = new URLSearchParams(window.location.search);
+      var keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content',
+                  'gclid','gad_source','gad_campaignid'];
+      var stored = {};
+      try { stored = JSON.parse(localStorage.getItem('guestflow_utm') || '{}'); } catch(e) {}
+      var updated = false;
+      keys.forEach(function(k) {
+        if (p.get(k)) { stored[k] = p.get(k); updated = true; }
+      });
+      /* device aus utm_content extrahieren: letzter Teil nach _ → m/c/t */
+      if (stored.utm_content && stored.utm_content.indexOf('_') !== -1) {
+        stored.device = stored.utm_content.split('_').pop();
+      }
+      if (updated) localStorage.setItem('guestflow_utm', JSON.stringify(stored));
     } catch(e) {}
   })();
 
