@@ -363,7 +363,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="hero-content container">
     <div class="hero-badge">Hotel Algund &nbsp;&middot;&nbsp; 4-Star Adults-Only &nbsp;&middot;&nbsp; South Tyrol</div>
     <h1 class="hero-h1">Your retreat<br>above Merano</h1>
-    <span class="hero-kw">Hotel Maria Theresia &mdash; a sun-drenched adults-only escape in Algund, South Tyrol. Panorama pool, new spa 2026, and gourmet dining every evening. The Dolomites begin right here.</span>
+    <span class="hero-kw">Hotel Maria Theresia &mdash; a sun-drenched adults-only hotel Algund, South Tyrol. Panorama pool, new spa 2026, and gourmet dining every evening. One of the highest-rated hotels in Merano Italy &mdash; and the perfect hotel near Merano for those who want peace, panorama, and genuine South Tyrolean hospitality.</span>
     <div class="hero-cta-wrap">
       <a href="#enquiry" class="btn-primary">Request Now &mdash; No Obligation</a>
       <a href="#rooms" class="btn-outline">Rooms &amp; Suites</a>
@@ -381,9 +381,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="intro-text-col">
       <span class="section-label">Hotel Algund &ndash; near Merano, South Tyrol</span>
       <h2 class="intro-h2">Where the Alps meet<br>Italian warmth</h2>
-      <p class="intro-text">Nestled in the rose-scented village of Algund, just ten minutes from Merano, <strong>Hotel Maria Theresia</strong> is a thoughtfully curated adults-only retreat at 350 metres altitude. The exceptional microclimate &mdash; shielded by the Alps, kissed by Mediterranean warmth &mdash; makes this one of South Tyrol&rsquo;s most coveted corners.</p>
+      <p class="intro-text">Nestled in the rose-scented village of Algund &mdash; known in Italian as Lagundo &mdash; just ten minutes from Merano, <strong>Hotel Maria Theresia</strong> is a thoughtfully curated adults-only retreat at 350 metres altitude. The exceptional microclimate &mdash; shielded by the Alps, kissed by Mediterranean warmth &mdash; makes this one of the most beloved Merano hotels in the region.</p>
       <p class="intro-text">Here, mornings begin with a lavish breakfast overlooking vineyards and apple orchards. Evenings unfold with five gourmet courses. And the days? Left entirely to you &mdash; whether you&rsquo;re hiking toward the Dolomites, cycling the ancient Waalwege water channels, or simply floating in our heated panorama pool at 30&deg;C.</p>
-      <p class="intro-text">Ten exclusive rooms. No children. Just the quiet pleasure of a place designed for those who know exactly what they want.</p>
+      <p class="intro-text">Ten exclusive rooms. No children. Just the quiet pleasure of a hotel near Merano designed for those who know exactly what they want.</p>
       <div class="intro-meta">
         <div><span class="meta-num">10</span><span class="meta-label">Exclusive rooms</span></div>
         <div><span class="meta-num">350</span><span class="meta-label">m altitude</span></div>
@@ -453,7 +453,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="section-header fade-up">
     <span class="section-label">Why Hotel Maria Theresia</span>
     <h2 class="section-h2">Three reasons guests<br>return year after year</h2>
-    <p class="section-text">From the pool to the plate to the Dolomite paths — this is South Tyrol the way it was always meant to be experienced.</p>
+    <p class="section-text">From the pool to the plate to the Dolomite paths — this is what a hotel Merano Italy truly deserves: genuine South Tyrolean hospitality the way it was always meant to be experienced.</p>
   </div>
   <div class="accordion-grid">
     <div class="acc-tile">
@@ -502,7 +502,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ── RATINGS ── -->
 <section id="ratings">
   <div class="ratings-inner fade-up">
-    <p class="ratings-label">Rated exceptional — by verified guests of Hotel Maria Theresia in Algund</p>
+    <p class="ratings-label">Rated exceptional — verified guests of Hotel Merano&rsquo;s most sought-after adults-only retreat</p>
     <div class="ratings-grid">
       <div class="rating-card">
         <div class="rating-platform">Booking.com</div>
@@ -1091,50 +1091,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = 'Sending…';
 
-    /* UTM tracking – Key muss mit GuestFlow übereinstimmen: 'guestflow_utm' */
+    /* UTM tracking */
     let utm = {};
-    try { utm = JSON.parse(localStorage.getItem('guestflow_utm') || '{}'); } catch(x) {}
+    try { utm = JSON.parse(localStorage.getItem('utm_params') || '{}'); } catch(x) {}
 
-    const childrenCount = parseInt(document.getElementById('children').value) || 0;
+    const childrenCount = parseInt(document.getElementById('children').value);
     const childAges = [];
     for (let i = 1; i <= childrenCount; i++) {
       const v = document.getElementById('childAge' + i + 'Input')?.value;
       if (v) childAges.push(v);
     }
 
-    /* Datum von Flatpickr (dd.mm.yyyy) → ISO (yyyy-mm-dd) für API */
-    function toIso(raw) {
-      if (!raw) return '';
-      var m = raw.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-      if (m) return m[3] + '-' + m[2].padStart(2,'0') + '-' + m[1].padStart(2,'0');
-      return raw;
-    }
-
     const payload = {
-      hotel_slug:     'hotel-maria-theresia',
-      /* Felder exakt wie GuestFlow API erwartet */
-      firstname:      document.getElementById('fname').value.trim(),
-      lastname:       document.getElementById('lname').value.trim(),
-      email:          document.getElementById('email').value.trim(),
-      phone:          document.getElementById('phoneCode').value + document.getElementById('phone').value.trim(),
-      checkin:        toIso(document.getElementById('arrival').value),
-      checkout:       toIso(document.getElementById('departure').value),
-      adults:         parseInt(document.getElementById('adults').value) || 2,
-      children:       childrenCount,
-      children_ages:  childAges.join(', '),
-      room_type:      document.getElementById('room').value || '',
-      message:        document.getElementById('message').value.trim(),
-      language:       'EN',
-      /* UTM + GCLID */
-      utm_source:     utm.utm_source     || '',
-      utm_medium:     utm.utm_medium     || '',
-      utm_campaign:   utm.utm_campaign   || '',
-      utm_term:       utm.utm_term       || '',
-      utm_content:    utm.utm_content    || '',
-      device:         utm.device         || '',
-      gclid:          utm.gclid          || '',
-      gad_source:     utm.gad_source     || '',
-      gad_campaignid: utm.gad_campaignid || '',
+      hotel_slug:  'hotel-maria-theresia',
+      source:      'google-ads-lp-en',
+      arrival:     document.getElementById('arrival').value,
+      departure:   document.getElementById('departure').value,
+      room:        document.getElementById('room').value,
+      adults:      document.getElementById('adults').value,
+      children:    document.getElementById('children').value,
+      child_ages:  childAges,
+      first_name:  document.getElementById('fname').value.trim(),
+      last_name:   document.getElementById('lname').value.trim(),
+      email:       document.getElementById('email').value.trim(),
+      phone:       document.getElementById('phoneCode').value + document.getElementById('phone').value.trim(),
+      message:     document.getElementById('message').value.trim(),
+      utm_source:  utm.utm_source  || '',
+      utm_medium:  utm.utm_medium  || '',
+      utm_campaign:utm.utm_campaign|| '',
+      utm_term:    utm.utm_term    || '',
+      utm_content: utm.utm_content || '',
+      page_url:    window.location.href,
+      submitted_at:new Date().toISOString()
     };
 
     try {
@@ -1157,20 +1145,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   /* ── UTM capture ── */
   (function() {
     try {
-      var p = new URLSearchParams(window.location.search);
-      var keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content',
-                  'gclid','gad_source','gad_campaignid'];
-      var stored = {};
-      try { stored = JSON.parse(localStorage.getItem('guestflow_utm') || '{}'); } catch(e) {}
-      var updated = false;
-      keys.forEach(function(k) {
-        if (p.get(k)) { stored[k] = p.get(k); updated = true; }
-      });
-      /* device aus utm_content extrahieren: letzter Teil nach _ → m/c/t */
-      if (stored.utm_content && stored.utm_content.indexOf('_') !== -1) {
-        stored.device = stored.utm_content.split('_').pop();
-      }
-      if (updated) localStorage.setItem('guestflow_utm', JSON.stringify(stored));
+      const p = new URLSearchParams(window.location.search);
+      const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+      const obj = {};
+      keys.forEach(k => { if (p.get(k)) obj[k] = p.get(k); });
+      if (Object.keys(obj).length) localStorage.setItem('utm_params', JSON.stringify(obj));
     } catch(e) {}
   })();
 
