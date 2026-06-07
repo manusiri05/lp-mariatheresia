@@ -990,176 +990,358 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ── SCRIPTS ── -->
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+  var API_URL = 'https://dashboard.outofthebox-media.com/api/lead';
+  var HOTEL_SLUG = 'hotel-maria-theresia';
+  var UTM_KEY = 'guestflow_utm';
+  var LEGACY_UTM_KEY = 'utm_params';
+
+  function byId(id) {
+    return document.getElementById(id);
+  }
+
+  function safeValue(id) {
+    var el = byId(id);
+    return el && typeof el.value !== 'undefined' ? String(el.value).trim() : '';
+  }
+
+  function showError(id, show) {
+    var el = byId(id);
+    if (el) el.style.display = show ? 'block' : 'none';
+  }
+
+  function markField(id, error) {
+    var el = byId(id);
+    if (!el) return;
+    if (error) el.classList.add('error');
+    else el.classList.remove('error');
+  }
+
+  function toIsoDate(raw) {
+    if (!raw) return '';
+    var m = String(raw).match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+    if (m) return m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0');
+    return raw;
+  }
+
+  function normalizePhone(prefix, number) {
+    prefix = prefix || '';
+    number = (number || '').replace(/\s/g, '').replace(/[^0-9+]/g, '');
+    if (prefix.charAt(0) === '+') {
+      number = number.replace(/^0+/, '');
+    }
+    return prefix + number;
+  }
+
+  function captureUtm() {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      var src = p.get('utm_source') || '';
+      var med = p.get('utm_medium') || '';
+      var gcl = p.get('gclid') || '';
+      var gadSource = p.get('gad_source') || '';
+      var gadCampaignId = p.get('gad_campaignid') || '';
+
+      if (src || med || gcl || gadSource || gadCampaignId) {
+        var content = p.get('utm_content') || '';
+        var device = '';
+        if (content.indexOf('_') !== -1) device = content.substring(content.lastIndexOf('_') + 1);
+
+        var obj = {
+          utm_source: src,
+          utm_medium: med,
+          utm_campaign: p.get('utm_campaign') || '',
+          utm_term: p.get('utm_term') || '',
+          utm_content: content,
+          device: device,
+          gclid: gcl,
+          gad_source: gadSource,
+          gad_campaignid: gadCampaignId
+        };
+
+        localStorage.setItem(UTM_KEY, JSON.stringify(obj));
+        localStorage.setItem(LEGACY_UTM_KEY, JSON.stringify(obj));
+      }
+    } catch (e) {}
+  }
+
+  function getUtm() {
+    try {
+      return JSON.parse(localStorage.getItem(UTM_KEY) || localStorage.getItem(LEGACY_UTM_KEY) || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
+  captureUtm();
+
   /* ── Header scroll ── */
-  const hdr = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    hdr.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
+  var hdr = byId('site-header');
+  if (hdr) {
+    window.addEventListener('scroll', function () {
+      hdr.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  }
 
   /* ── Fade-up animations ── */
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(function (el) {
+      observer.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.fade-up').forEach(function (el) {
+      el.classList.add('visible');
+    });
+  }
 
   /* ── Room Slider ── */
-  const track   = document.getElementById('sliderTrack');
-  const dots    = document.querySelectorAll('.slider-dot');
-  const counter = document.getElementById('sliderCurrent');
-  let current = 0, total = 5;
+  var track = byId('sliderTrack');
+  var dots = document.querySelectorAll('.slider-dot');
+  var counter = byId('sliderCurrent');
+  var current = 0;
+  var total = dots.length || 5;
 
   function goTo(idx) {
+    if (!track || !counter || !total) return;
     current = (idx + total) % total;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach(function (dot, i) {
+      dot.classList.toggle('active', i === current);
+    });
     counter.textContent = current + 1;
   }
 
-  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
-  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
-  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
-
-  /* touch swipe */
-  let tsX = 0;
-  track.addEventListener('touchstart', e => { tsX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend',   e => {
-    const dx = e.changedTouches[0].clientX - tsX;
-    if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
-  });
-
-  /* ── Flatpickr ── */
-  const today = new Date();
-  const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
-
-  const fpArrival = flatpickr('#arrival', {
-    dateFormat: 'd.m.Y', minDate: 'today', locale: 'default',
-    onChange: (sel) => {
-      if (sel[0]) {
-        const minDep = new Date(sel[0]); minDep.setDate(minDep.getDate() + 1);
-        fpDeparture.set('minDate', minDep);
-        if (fpDeparture.selectedDates[0] && fpDeparture.selectedDates[0] <= sel[0]) fpDeparture.clear();
-      }
-    }
-  });
-  const fpDeparture = flatpickr('#departure', {
-    dateFormat: 'd.m.Y', minDate: tomorrow
-  });
-
-  /* ── Child age fields ── */
-  document.getElementById('children').addEventListener('change', function() {
-    const n = parseInt(this.value);
-    for (let i = 1; i <= 3; i++) {
-      const f = document.getElementById('childAge' + i);
-      f.style.display = i <= n ? 'block' : 'none';
-      f.classList.toggle('full-width', n === 1);
-    }
-  });
-
-  /* ── Form Submission ── */
-  document.getElementById('enquiryForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    let valid = true;
-
-    const required = [
-      { id: 'arrival',   errId: 'err-arrival',   check: v => v.trim() !== '' },
-      { id: 'departure', errId: 'err-departure',  check: v => v.trim() !== '' },
-      { id: 'fname',     errId: 'err-fname',      check: v => v.trim().length >= 2 },
-      { id: 'lname',     errId: 'err-lname',      check: v => v.trim().length >= 2 },
-      { id: 'email',     errId: 'err-email',      check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-      { id: 'phone',     errId: 'err-phone',      check: v => v.trim().length >= 5 },
-    ];
-
-    required.forEach(({ id, errId, check }) => {
-      const el  = document.getElementById(id);
-      const err = document.getElementById(errId);
-      const ok  = check(el.value);
-      el.classList.toggle('error', !ok);
-      if (err) err.style.display = ok ? 'none' : 'block';
-      if (!ok) valid = false;
+  if (track) {
+    var prevBtn = byId('prevBtn');
+    var nextBtn = byId('nextBtn');
+    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); });
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { goTo(i); });
     });
 
-    const priv    = document.getElementById('privacy');
-    const privErr = document.getElementById('err-privacy');
-    if (!priv.checked) {
-      privErr.style.display = 'block'; valid = false;
-    } else {
-      privErr.style.display = 'none';
+    var tsX = 0;
+    track.addEventListener('touchstart', function (e) {
+      tsX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - tsX;
+      if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
+    });
+  }
+
+  /* ── Flatpickr ── */
+  var fpDeparture = null;
+  if (typeof flatpickr === 'function' && byId('arrival') && byId('departure')) {
+    var today = new Date();
+    var tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    flatpickr('#arrival', {
+      dateFormat: 'd.m.Y',
+      minDate: 'today',
+      onChange: function (selectedDates) {
+        if (!selectedDates[0] || !fpDeparture) return;
+        var minDep = new Date(selectedDates[0]);
+        minDep.setDate(minDep.getDate() + 1);
+        fpDeparture.set('minDate', minDep);
+        if (!fpDeparture.selectedDates[0] || fpDeparture.selectedDates[0] <= selectedDates[0]) {
+          fpDeparture.setDate(minDep);
+        }
+      }
+    });
+
+    fpDeparture = flatpickr('#departure', {
+      dateFormat: 'd.m.Y',
+      minDate: tomorrow
+    });
+  }
+
+  /* ── Child age fields ── */
+  var childrenSelect = byId('children');
+  if (childrenSelect) {
+    childrenSelect.addEventListener('change', function () {
+      var n = parseInt(this.value, 10) || 0;
+      for (var i = 1; i <= 3; i++) {
+        var field = byId('childAge' + i);
+        var input = byId('childAge' + i + 'Input');
+        if (!field) continue;
+        field.style.display = i <= n ? 'block' : 'none';
+        field.classList.toggle('full-width', n === 1);
+        if (input && i > n) input.value = '';
+      }
+    });
+  }
+
+  var phoneInput = byId('phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function () {
+      this.value = this.value.replace(/[^0-9 +]/g, '');
+    });
+  }
+
+  function validate() {
+    var ok = true;
+
+    var arrival = safeValue('arrival');
+    showError('err-arrival', !arrival);
+    markField('arrival', !arrival);
+    if (!arrival) ok = false;
+
+    var departure = safeValue('departure');
+    showError('err-departure', !departure);
+    markField('departure', !departure);
+    if (!departure) ok = false;
+
+    var fname = safeValue('fname');
+    showError('err-fname', fname.length < 2);
+    markField('fname', fname.length < 2);
+    if (fname.length < 2) ok = false;
+
+    var lname = safeValue('lname');
+    showError('err-lname', lname.length < 2);
+    markField('lname', lname.length < 2);
+    if (lname.length < 2) ok = false;
+
+    var email = safeValue('email');
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    showError('err-email', !emailOk);
+    markField('email', !emailOk);
+    if (!emailOk) ok = false;
+
+    var phone = safeValue('phone').replace(/\s/g, '');
+    showError('err-phone', phone.length < 5);
+    markField('phone', phone.length < 5);
+    if (phone.length < 5) ok = false;
+
+    var childrenCount = parseInt(safeValue('children'), 10) || 0;
+    for (var i = 1; i <= childrenCount; i++) {
+      var childAge = safeValue('childAge' + i + 'Input');
+      markField('childAge' + i + 'Input', !childAge);
+      if (!childAge) ok = false;
     }
 
-    if (!valid) return;
+    var privacy = byId('privacy');
+    var privacyOk = privacy && privacy.checked;
+    showError('err-privacy', !privacyOk);
+    if (!privacyOk) ok = false;
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    return ok;
+  }
 
-    /* UTM tracking */
-    let utm = {};
-    try { utm = JSON.parse(localStorage.getItem('utm_params') || '{}'); } catch(x) {}
+  var form = byId('enquiryForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validate()) return;
 
-    const childrenCount = parseInt(document.getElementById('children').value);
-    const childAges = [];
-    for (let i = 1; i <= childrenCount; i++) {
-      const v = document.getElementById('childAge' + i + 'Input')?.value;
-      if (v) childAges.push(v);
-    }
+      var btn = byId('submitBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+      }
 
-    const payload = {
-      hotel_slug:  'hotel-maria-theresia',
-      source:      'google-ads-lp-en',
-      arrival:     document.getElementById('arrival').value,
-      departure:   document.getElementById('departure').value,
-      room:        document.getElementById('room').value,
-      adults:      document.getElementById('adults').value,
-      children:    document.getElementById('children').value,
-      child_ages:  childAges,
-      first_name:  document.getElementById('fname').value.trim(),
-      last_name:   document.getElementById('lname').value.trim(),
-      email:       document.getElementById('email').value.trim(),
-      phone:       document.getElementById('phoneCode').value + document.getElementById('phone').value.trim(),
-      message:     document.getElementById('message').value.trim(),
-      utm_source:  utm.utm_source  || '',
-      utm_medium:  utm.utm_medium  || '',
-      utm_campaign:utm.utm_campaign|| '',
-      utm_term:    utm.utm_term    || '',
-      utm_content: utm.utm_content || '',
-      page_url:    window.location.href,
-      submitted_at:new Date().toISOString()
-    };
+      var childrenCount = parseInt(safeValue('children'), 10) || 0;
+      var childAges = [];
+      for (var i = 1; i <= childrenCount; i++) {
+        var age = safeValue('childAge' + i + 'Input');
+        if (age) childAges.push(age);
+      }
 
-    try {
-      const res = await fetch('https://dashboard.outofthebox-media.com/api/lead', {
+      var utm = getUtm();
+      var payload = {
+        hotel_slug: HOTEL_SLUG,
+        source: 'google-ads-lp-en',
+
+        firstname: safeValue('fname'),
+        lastname: safeValue('lname'),
+        email: safeValue('email'),
+        phone: normalizePhone(safeValue('phoneCode'), safeValue('phone')),
+
+        checkin: toIsoDate(safeValue('arrival')),
+        checkout: toIsoDate(safeValue('departure')),
+        adults: parseInt(safeValue('adults'), 10) || 2,
+        children: childrenCount,
+        children_ages: childAges.join(', '),
+        room_type: safeValue('room'),
+        message: safeValue('message'),
+        language: 'EN',
+
+        utm_source: utm.utm_source || '',
+        utm_medium: utm.utm_medium || '',
+        utm_campaign: utm.utm_campaign || '',
+        utm_term: utm.utm_term || '',
+        utm_content: utm.utm_content || '',
+        device: utm.device || '',
+        gclid: utm.gclid || '',
+        gad_source: utm.gad_source || '',
+        gad_campaignid: utm.gad_campaignid || '',
+
+        page_url: window.location.href,
+        submitted_at: new Date().toISOString()
+      };
+
+      fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      });
-      if (res.ok || res.status === 200 || res.status === 201) {
-        document.getElementById('successMsg').style.display = 'block';
-        document.getElementById('enquiryForm').querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = true);
-        if (window.dataLayer) dataLayer.push({ event: 'lead_submitted', hotel: 'hotel-maria-theresia' });
-      } else { throw new Error('Server error'); }
-    } catch (err) {
-      btn.disabled = false; btn.textContent = 'Send Non-Binding Enquiry';
-      alert('Something went wrong. Please try again or contact us directly at info@mariatheresia.it.');
-    }
-  });
+      })
+      .then(function (response) {
+        return response.json().catch(function () {
+          return { success: response.ok, status: response.status };
+        });
+      })
+      .then(function (data) {
+        if (data && (data.success || data.id)) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'form_lead_success',
+            form_data: {
+              hotel: HOTEL_SLUG,
+              room: payload.room_type,
+              guests: payload.adults,
+              lead_id: data.id || '',
+              device: payload.device
+            }
+          });
 
-  /* ── UTM capture ── */
-  (function() {
-    try {
-      const p = new URLSearchParams(window.location.search);
-      const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
-      const obj = {};
-      keys.forEach(k => { if (p.get(k)) obj[k] = p.get(k); });
-      if (Object.keys(obj).length) localStorage.setItem('utm_params', JSON.stringify(obj));
-    } catch(e) {}
-  })();
+          var successMsg = byId('successMsg');
+          if (successMsg) successMsg.style.display = 'block';
+          if (btn) btn.style.display = 'none';
+
+          try { localStorage.removeItem(UTM_KEY); } catch (e) {}
+        } else {
+          throw new Error('CRM did not confirm success');
+        }
+      })
+      .catch(function () {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Send Non-Binding Enquiry';
+        }
+        alert('Something went wrong. Please try again or contact us directly at info@mariatheresia.it.');
+      });
+    });
+  }
 
   /* ── Accordion touch on mobile ── */
-  document.querySelectorAll('.acc-tile').forEach(tile => {
-    tile.addEventListener('click', () => {
+  document.querySelectorAll('.acc-tile').forEach(function (tile) {
+    tile.addEventListener('click', function () {
       tile.classList.toggle('active');
     });
   });
+});
 </script>
+
 
 </body>
 </html>
