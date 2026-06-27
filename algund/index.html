@@ -994,7 +994,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var API_URL = 'https://dashboard.outofthebox-media.com/api/lead';
   var HOTEL_SLUG = 'hotel-maria-theresia';
   var UTM_KEY = 'guestflow_utm';
-  var LEGACY_UTM_KEY = 'utm_params';
 
   function byId(id) {
     return document.getElementById(id);
@@ -1033,21 +1032,21 @@ document.addEventListener('DOMContentLoaded', function () {
     return prefix + number;
   }
 
-  function captureUtm() {
-    try {
-      var p = new URLSearchParams(window.location.search);
-      var src = p.get('utm_source') || '';
-      var med = p.get('utm_medium') || '';
-      var gcl = p.get('gclid') || '';
-      var gadSource = p.get('gad_source') || '';
-      var gadCampaignId = p.get('gad_campaignid') || '';
+  (function captureUtm() {
+    var p = new URLSearchParams(window.location.search);
+    var src = p.get('utm_source') || '';
+    var med = p.get('utm_medium') || '';
+    var gcl = p.get('gclid') || '';
 
-      if (src || med || gcl || gadSource || gadCampaignId) {
-        var content = p.get('utm_content') || '';
-        var device = '';
-        if (content.indexOf('_') !== -1) device = content.substring(content.lastIndexOf('_') + 1);
+    if (src || med || gcl) {
+      var content = p.get('utm_content') || '';
+      var device = '';
+      if (content.indexOf('_') !== -1) {
+        device = content.substring(content.lastIndexOf('_') + 1);
+      }
 
-        var obj = {
+      try {
+        localStorage.setItem(UTM_KEY, JSON.stringify({
           utm_source: src,
           utm_medium: med,
           utm_campaign: p.get('utm_campaign') || '',
@@ -1055,25 +1054,20 @@ document.addEventListener('DOMContentLoaded', function () {
           utm_content: content,
           device: device,
           gclid: gcl,
-          gad_source: gadSource,
-          gad_campaignid: gadCampaignId
-        };
-
-        localStorage.setItem(UTM_KEY, JSON.stringify(obj));
-        localStorage.setItem(LEGACY_UTM_KEY, JSON.stringify(obj));
-      }
-    } catch (e) {}
-  }
+          gad_source: p.get('gad_source') || '',
+          gad_campaignid: p.get('gad_campaignid') || ''
+        }));
+      } catch (e) {}
+    }
+  })();
 
   function getUtm() {
     try {
-      return JSON.parse(localStorage.getItem(UTM_KEY) || localStorage.getItem(LEGACY_UTM_KEY) || '{}');
+      return JSON.parse(localStorage.getItem(UTM_KEY) || '{}');
     } catch (e) {
       return {};
     }
   }
-
-  captureUtm();
 
   /* ── Header scroll ── */
   var hdr = byId('site-header');
@@ -1260,22 +1254,18 @@ document.addEventListener('DOMContentLoaded', function () {
       var utm = getUtm();
       var payload = {
         hotel_slug: HOTEL_SLUG,
-        source: 'google-ads-lp-en',
-
         firstname: safeValue('fname'),
         lastname: safeValue('lname'),
         email: safeValue('email'),
         phone: normalizePhone(safeValue('phoneCode'), safeValue('phone')),
-
         checkin: toIsoDate(safeValue('arrival')),
         checkout: toIsoDate(safeValue('departure')),
         adults: parseInt(safeValue('adults'), 10) || 2,
         children: childrenCount,
         children_ages: childAges.join(', '),
-        room_type: safeValue('room'),
         message: safeValue('message'),
+        room_type: safeValue('room'),
         language: 'EN',
-
         utm_source: utm.utm_source || '',
         utm_medium: utm.utm_medium || '',
         utm_campaign: utm.utm_campaign || '',
@@ -1284,10 +1274,7 @@ document.addEventListener('DOMContentLoaded', function () {
         device: utm.device || '',
         gclid: utm.gclid || '',
         gad_source: utm.gad_source || '',
-        gad_campaignid: utm.gad_campaignid || '',
-
-        page_url: window.location.href,
-        submitted_at: new Date().toISOString()
+        gad_campaignid: utm.gad_campaignid || ''
       };
 
       fetch(API_URL, {
@@ -1296,17 +1283,14 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify(payload)
       })
       .then(function (response) {
-        return response.json().catch(function () {
-          return { success: response.ok, status: response.status };
-        });
+        return response.json();
       })
       .then(function (data) {
-        if (data && (data.success || data.id)) {
+        if (data && data.success) {
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
             event: 'form_lead_success',
             form_data: {
-              hotel: HOTEL_SLUG,
               room: payload.room_type,
               guests: payload.adults,
               lead_id: data.id || '',
