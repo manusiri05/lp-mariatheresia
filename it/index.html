@@ -137,7 +137,7 @@
 
     /* ── PHILOSOPHY ── */
     #philosophy { position: relative; padding: 100px 24px; overflow: hidden; }
-    .philosophy-bg { position: absolute; inset: 0; background-image: url('https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/020_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3948.jpg'); background-size: cover; background-position: center; filter: brightness(0.30); }
+    .philosophy-bg { position: absolute; inset: 0; background-image: url('https://www.mariatheresia.it/typo3temp/assets/_processed_/d/0/csm_angebot_winterzauber_mit_pluss_458ae82c88.webp'); background-size: cover; background-position: center; filter: brightness(0.30); }
     .philosophy-inner { position: relative; z-index: 2; max-width: 780px; margin-inline: auto; text-align: center; }
     .quote-mark { font-family: var(--font-serif); font-size: 5rem; color: var(--gold); line-height: 0.6; display: block; margin-bottom: 20px; opacity: 0.7; }
     .philosophy-quote { font-family: var(--font-serif); font-size: clamp(1.4rem, 2.8vw, 2.1rem); font-weight: 300; font-style: italic; line-height: 1.5; color: var(--white); margin-bottom: 32px; }
@@ -280,6 +280,34 @@
     .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
     .success-msg { display: none; grid-column: span 2; background: #e8f5e9; border: 1px solid #a5d6a7; padding: 16px; color: #2e7d32; font-size: 0.92rem; font-weight: 500; text-align: center; line-height: 1.5; }
 
+
+    .offer-link { background: transparent; font-family: var(--font-sans); cursor: pointer; }
+    .offer-link[type="button"] { appearance: none; }
+    .privacy-link-text { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+    .footer-legal span { color: rgba(255,255,255,0.22); }
+
+    /* ── OFFER MODAL ── */
+    .offer-modal { position: fixed; inset: 0; background: rgba(20,16,10,0.72); z-index: 3000; display: none; align-items: center; justify-content: center; padding: 24px; }
+    .offer-modal.open { display: flex; }
+    .offer-modal-dialog { width: min(860px, 100%); max-height: 88vh; overflow: hidden; background: var(--white); box-shadow: 0 20px 60px rgba(0,0,0,0.28); display: flex; flex-direction: column; }
+    .offer-modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 28px 28px 20px; border-bottom: 1px solid var(--cream-deep); }
+    .offer-modal-date { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; display: block; }
+    .offer-modal-title { font-family: var(--font-serif); font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 400; line-height: 1.2; color: var(--dark); }
+    .offer-modal-close { border: 0; background: transparent; font-size: 2rem; line-height: 1; color: var(--muted); cursor: pointer; }
+    .offer-modal-body { padding: 24px 28px 28px; overflow: auto; }
+    .offer-modal-lead { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 18px; }
+    .offer-modal-section { margin-bottom: 22px; }
+    .offer-modal-section h4 { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 12px; }
+    .offer-modal-section ul { margin: 0; padding-left: 18px; }
+    .offer-modal-section li { font-size: 0.9rem; color: var(--dark-mid); line-height: 1.7; margin-bottom: 8px; }
+    .offer-modal-section p { font-size: 0.9rem; color: var(--dark-mid); line-height: 1.75; }
+    .offer-modal-cta { display: flex; justify-content: flex-start; padding-top: 8px; }
+    @media (max-width: 768px) {
+      .offer-modal { padding: 12px; }
+      .offer-modal-head { padding: 22px 20px 16px; }
+      .offer-modal-body { padding: 18px 20px 22px; }
+    }
+
     /* ── FOOTER ── */
     #footer { background: #1e1b14; padding: 56px 24px 32px; }
     .footer-inner { max-width: var(--max-w); margin-inline: auto; }
@@ -371,12 +399,11 @@
 <div aria-label="Panorama di Lagundo – Hotel Maria Theresia, Alto Adige" class="hero-bg" role="img"></div>
 <div class="hero-overlay"></div>
 <div class="hero-content container">
-<div class="hero-badge">Hotel Lagundo 4 stelle  ·  Adults Only  ·  Alto Adige</div>
 <h1 class="hero-h1">Hotel Lagundo tra autunno dorato<br/>e mercatini di Natale</h1>
-<span class="hero-kw">Hotel Maria Theresia: il vostro hotel Lagundo nel cuore dell’Alto Adige per vacanze tra foliage, Törggelen, relax e atmosfere natalizie. Piscina panoramica, nuova spa 2026 e cucina gourmet ogni sera: la scelta ideale per chi desidera un hotel Lagundo Merano tranquillo, panoramico e perfetto anche per i mercatini di Natale di dicembre.</span>
+<span class="hero-kw">Hotel Maria Theresia è il vostro hotel Lagundo per foliage, Törggelen, relax e mercatini di Natale. Piscina panoramica, nuova spa 2026 e cucina gourmet ogni sera, a pochi minuti da Merano.</span>
 <div class="hero-cta-wrap">
 <a class="btn-primary" href="#enquiry">Richiedi ora — senza impegno</a>
-<a class="btn-outline" href="#rooms">Camere &amp; Suite</a>
+<a class="btn-outline" href="#offers">Offerte</a>
 </div>
 </div>
 <div aria-hidden="true" class="hero-scroll">
@@ -390,9 +417,9 @@
 <div class="intro-text-col">
 <span class="section-label">Albergo Lagundo – vicino Merano, Alto Adige</span>
 <h2 class="intro-h2">Autunno dorato,<br/>relax e magia d’inverno</h2>
-<p class="intro-text">Nel verde di Lagundo, a soli dieci minuti da Merano, <strong>Hotel Maria Theresia</strong> è un raffinato hotel benessere Lagundo Adults Only a 350 metri di altitudine. Il microclima protetto dalle Alpi e addolcito da influenze mediterranee rende questo resort Lagundo uno dei luoghi più piacevoli per una vacanza vicino Merano.</p>
-<p class="intro-text">Qui le giornate iniziano con una ricca colazione affacciata su vigneti e meleti e si concludono con un menu gourmet di cinque portate. In autunno vi aspettano l’Indian Summer altoatesino, il Törggelen e passeggiate tra i colori della stagione; a dicembre, invece, il nostro hotel Lagundo mezza pensione è il punto di partenza ideale per vivere i mercatini di Natale di Merano e godersi momenti di puro relax nella piscina panoramica riscaldata a 30°C.</p>
-<p class="intro-text">Dieci camere esclusive, nessun bambino e tutta la tranquillità che desiderate. Per chi vuole dormire a Lagundo con più servizi e privacy rispetto a un garni Lagundo, soprattutto nei periodi più suggestivi dell’anno tra ottobre, novembre e dicembre.</p>
+<p class="intro-text">A soli dieci minuti da Merano, <strong>Hotel Maria Theresia</strong> è un elegante hotel benessere Lagundo Adults Only a 350 metri di altitudine. Il suo clima mite e la posizione panoramica lo rendono perfetto per una pausa rilassante vicino a Merano.</p>
+<p class="intro-text">Le giornate iniziano con una ricca colazione e si concludono con un menu gourmet di cinque portate. In autunno vi aspettano Indian Summer, Törggelen e passeggiate tra i colori della stagione; a dicembre, invece, i mercatini di Natale di Merano e il relax nella piscina panoramica riscaldata a 30°C.</p>
+<p class="intro-text">Dieci camere esclusive, nessun bambino e tutta la tranquillità che desiderate: l’ideale per dormire a Lagundo con più comfort e privacy nei mesi più suggestivi dell’anno.</p>
 <div class="intro-meta">
 <div><span class="meta-num">10</span><span class="meta-label">Camere esclusive</span></div>
 <div><span class="meta-num">350</span><span class="meta-label">m di altitudine</span></div>
@@ -400,7 +427,7 @@
 </div>
 </div>
 <div class="intro-image-wrap">
-<img alt="Panorama montano dell’Alto Adige sopra Lagundo – Hotel Maria Theresia" class="intro-image-main" height="740" loading="lazy" src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/Benjamin_Pfitscher_WEB__bp_341227_c_benjamin_pfitscher_c_benjamin_pfitscher_web%20(33)%20Herbst%20Berg%20Panorama%20Vellau.jpg" width="560"/>
+<img alt="Panorama montano dell’Alto Adige sopra Lagundo – Hotel Maria Theresia" class="intro-image-main" height="740" loading="lazy" src="https://www.mariatheresia.it/typo3temp/assets/_processed_/a/f/csm_angebot_wein_aepfel_mit_plus_2efbeb3c6b.webp" width="560"/>
 <div class="intro-image-badge">
 <svg aria-hidden="true" class="badge-icon-svg" fill="none" viewbox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 <circle cx="16" cy="14" r="5" stroke="#d59d34" stroke-width="1.5"></circle>
@@ -549,7 +576,7 @@
 <h3 class="offer-title">Colori e sapori d’autunno</h3>
 <p class="offer-text">Vivete l’Indian Summer altoatesino a Lagundo tra Törggelen, escursioni nei boschi colorati, passeggiate tra i vigneti e piacevoli momenti gourmet. Ideale per chi ama l’autunno in Alto Adige.</p>
 <div class="offer-actions">
-<a class="offer-link" href="https://www.mariatheresia.it/it/camere-prezzi-offerte/offerte/dettagli/colori-dautunno-2026/" target="_blank" rel="noopener">Dettagli</a>
+<button class="offer-link offer-detail-btn" type="button" data-offer="autunno">Dettagli</button>
 <a class="offer-link" href="#enquiry">Richiedi ora</a>
 </div>
 </div>
@@ -561,7 +588,7 @@
 <h3 class="offer-title">Settimane Relax &amp; Wellness</h3>
 <p class="offer-text">Il periodo ideale per rallentare: nuova area wellness, piscina esterna riscaldata, cucina gourmet e un’atmosfera tranquilla senza folla. Perfetto per chi desidera rigenerarsi tra novembre e inizio dicembre.</p>
 <div class="offer-actions">
-<a class="offer-link" href="https://www.mariatheresia.it/it/camere-prezzi-offerte/offerte/dettagli/settimane-relax-wellness/" target="_blank" rel="noopener">Dettagli</a>
+<button class="offer-link offer-detail-btn" type="button" data-offer="wellness">Dettagli</button>
 <a class="offer-link" href="#enquiry">Richiedi ora</a>
 </div>
 </div>
@@ -573,7 +600,7 @@
 <h3 class="offer-title">Magia d’inverno con un tocco in più</h3>
 <p class="offer-text">Per chi ama il dicembre altoatesino: passeggiata al Mercatino di Natale di Merano, atmosfera in baita, relax in hotel e un soggiorno perfetto per vivere la magia dell’inverno e delle feste.</p>
 <div class="offer-actions">
-<a class="offer-link" href="https://www.mariatheresia.it/it/camere-prezzi-offerte/offerte/dettagli/magia-dinverno-2026/" target="_blank" rel="noopener">Dettagli</a>
+<button class="offer-link offer-detail-btn" type="button" data-offer="inverno">Dettagli</button>
 <a class="offer-link" href="#enquiry">Richiedi ora</a>
 </div>
 </div>
@@ -948,7 +975,7 @@
 </div>
 <div class="privacy-row">
 <input id="privacy" name="privacy" type="checkbox"/>
-<label for="privacy">Ho letto e accetto la <a href="https://www.mariatheresia.it/it/servizio/privacy-cookies/" rel="noopener" target="_blank">privacy policy</a> dell’Hotel Maria Theresia. I miei dati saranno utilizzati esclusivamente per elaborare questa richiesta.</label>
+<label for="privacy">Ho letto e accetto la <span class="privacy-link-text">privacy policy</span> dell’Hotel Maria Theresia. I miei dati saranno utilizzati esclusivamente per elaborare questa richiesta.</label>
 </div>
 <div class="field-error full-width" id="err-privacy">Accettate la privacy policy.</div>
 <button class="submit-btn" id="submitBtn" type="submit">Invia richiesta senza impegno</button>
@@ -959,6 +986,20 @@
 </div>
 </div>
 </section>
+
+<div class="offer-modal" id="offerModal" aria-hidden="true">
+  <div class="offer-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="offerModalTitle">
+    <div class="offer-modal-head">
+      <div>
+        <span class="offer-modal-date" id="offerModalDate"></span>
+        <h3 class="offer-modal-title" id="offerModalTitle"></h3>
+      </div>
+      <button class="offer-modal-close" type="button" id="offerModalClose" aria-label="Chiudi">×</button>
+    </div>
+    <div class="offer-modal-body" id="offerModalBody"></div>
+  </div>
+</div>
+
 <!-- ── FOOTER ── -->
 <footer id="footer">
 <div class="footer-inner">
@@ -976,10 +1017,10 @@
 <div>
 <div class="footer-col-title">Hotel</div>
 <div class="footer-links">
-<a href="https://www.mariatheresia.it/it/camere-prezzi-offerte/camere-e-suite/" rel="noopener" target="_blank">Camere &amp; Suite</a>
-<a href="https://www.mariatheresia.it/it/benessere-gusto/relax-spa/" rel="noopener" target="_blank">Spa &amp; Benessere</a>
-<a href="https://www.mariatheresia.it/it/benessere-gusto/cucina-gusto/" rel="noopener" target="_blank">Ristorante &amp; Colazione</a>
-<a href="https://www.mariatheresia.it/it/camere-prezzi-offerte/offerte/" rel="noopener" target="_blank">Offerte speciali</a>
+<a href="#rooms">Camere &amp; Suite</a>
+<a href="#features">Spa &amp; Benessere</a>
+<a href="#features">Ristorante &amp; Colazione</a>
+<a href="#offers">Offerte speciali</a>
 </div>
 </div>
 <div>
@@ -991,15 +1032,15 @@
 </div>
 <div class="footer-col-title" style="margin-top:24px">Website</div>
 <div class="footer-links">
-<a href="https://www.mariatheresia.it/it/" rel="noopener" target="_blank">mariatheresia.it</a>
+<a href="#hero">Hotel Maria Theresia</a>
 </div>
 </div>
 </div>
 <div class="footer-bottom">
 <span>© 2026 Rosenhotel Maria Theresia Des Kuen Wolfgang &amp; Co. KG · P. IVA 2616020216 · CIN: IT021038A1XERO9UJP</span>
 <div class="footer-legal">
-<a href="https://www.mariatheresia.it/it/servizio/colophon/" rel="noopener" target="_blank">Colophon</a>
-<a href="https://www.mariatheresia.it/it/servizio/privacy-cookies/" rel="noopener" target="_blank">Privacy &amp; Cookie</a>
+<span>Colophon</span>
+<span>Privacy &amp; Cookie</span>
 <span>Performance marketing di <a href="https://outofthebox-media.com" rel="noopener" target="_blank">Out of the Box Media</a></span>
 </div>
 </div>
@@ -1337,6 +1378,153 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+
+
+  /* ── Offer modal ── */
+  var offerData = {
+    autunno: {
+      date: '11.10. – 01.11.26',
+      title: 'Colori e sapori d’autunno',
+      lead: 'Vivete l’“Indian Summer” altoatesino a Lagundo tra Törggelen, momenti di gusto autunnali e giornate di sole perfette per staccare la spina e ricaricare le energie.',
+      sections: [
+        {
+          title: 'Programma della settimana',
+          items: [
+            'Ogni martedì: escursione autunnale all’insegna del gusto con Wolfgang & Michael tra boschi dai mille colori, sentieri tranquilli e viaggio in autobus incluso.',
+            'Giovedì 15/10: passeggiata tra i vigneti autunnali a Lagundo con degustazione di vini, tappe culinarie e musica d’atmosfera.',
+            'Giovedì 22/10: passi dolomitici con breve escursione e picnic in un punto panoramico soleggiato.',
+            'Giovedì 29/10: gita autunnale con breve escursione e tipico pomeriggio di Törggelen in ambiente rustico con musica dal vivo.'
+          ]
+        },
+        {
+          title: 'Vantaggi speciali',
+          items: [
+            'Ogni mercoledì: cena di gala per buongustai.',
+            'Ogni sabato: raffinato buffet di antipasti e finger food.',
+            '10% di sconto su tutti i trattamenti beauty e massaggi.',
+            'Alto Adige Guest Pass incluso gratuitamente.',
+            'Una deliziosa sorpresa culinaria al momento della partenza.',
+            'Bonus fedeltà € 100 (2 x € 50) a partire da 7 notti e dal secondo soggiorno presso di noi.'
+          ]
+        }
+      ]
+    },
+    wellness: {
+      date: '08.11. – 08.12.26',
+      title: 'Settimane Relax & Wellness',
+      lead: 'Quando fuori tutto rallenta, qui l’atmosfera diventa ancora più accogliente: l’Alto Adige mostra il suo volto più autentico e tranquillo, perfetto per rigenerarsi con lunghe colazioni, cene gourmet, nuova area wellness e piccole pause che lasciano il segno.',
+      sections: [
+        {
+          title: 'Pacchetto Extra Plus',
+          items: [
+            'Aperitivo di benvenuto.',
+            'Gourmet Extra Plus: drink di benvenuto, ricco buffet di colazione con spumante e salmone, buffet vitale pomeridiano con acqua, caffè, tè e cioccolata, buffet di dolci e menu gourmet di 5 portate ogni sera.',
+            'Highlight culinari: mercoledì cena di gala con 6 portate, sabato grande buffet di antipasti.',
+            'Wellness Extra Plus: piscina esterna riscaldata tutto l’anno e nuova area saune con sauna finlandese, bagno turco aromatico, cabina a infrarossi, fontana di ghiaccio, docce emozionali e zona relax.',
+            'Servizi wellness inclusi: borsa wellness con accappatoio, ciabattine e teli piscina, Spa Bar con frutta fresca, frutta secca, succhi e tè.',
+            'Gettata di vapore professionale in sauna 2 volte a settimana.'
+          ]
+        },
+        {
+          title: 'Altri vantaggi',
+          items: [
+            'Massaggi & trattamenti estetici: 10% di sconto su tutti i trattamenti il mercoledì e il giovedì.',
+            'Hotel Extra Plus: escursioni guidate con i padroni di casa, Algund Guest Pass per autobus, treni e alcune funivie dell’Alto Adige, noleggio gratuito di bastoncini da trekking e noleggio E-bike a tariffa agevolata.',
+            'Sconti Extra Plus: 10% di sconto per soggiorni di almeno 7 notti e 15% per soggiorni di almeno 10 notti.',
+            'Valido esclusivamente dall’8 novembre all’8 dicembre 2026.',
+            'Perfetto per chi desidera vivere con calma e consapevolezza la magia della fine dell’anno.'
+          ]
+        }
+      ]
+    },
+    inverno: {
+      date: 'Dicembre & Capodanno 2026',
+      title: 'Magia d’inverno con un tocco in più',
+      lead: 'Un’esplosione di ricordi indimenticabili: siamo lieti di festeggiare con voi il passaggio al nuovo anno con un soggiorno ricco di atmosfera, esperienze e momenti speciali.',
+      sections: [
+        {
+          title: 'I vostri plus',
+          items: [
+            'Passeggiata insieme al Mercatino di Natale di Merano.',
+            'Atmosfera in baita con musica dal vivo.',
+            'Grande cenone di Capodanno con fuochi d’artificio e festa.',
+            'Escursione con breve camminata sulla neve e picnic.',
+            'E molto altro ancora: lasciatevi sorprendere, sarà magico!'
+          ]
+        }
+      ]
+    }
+  };
+
+  var offerModal = document.getElementById('offerModal');
+  var offerModalDate = document.getElementById('offerModalDate');
+  var offerModalTitle = document.getElementById('offerModalTitle');
+  var offerModalBody = document.getElementById('offerModalBody');
+  var offerModalClose = document.getElementById('offerModalClose');
+
+  function renderOfferModal(key) {
+    var data = offerData[key];
+    if (!data) return;
+    offerModalDate.textContent = data.date || '';
+    offerModalTitle.textContent = data.title || '';
+
+    var html = '';
+    if (data.lead) {
+      html += '<p class="offer-modal-lead">' + data.lead + '</p>';
+    }
+    (data.sections || []).forEach(function(section) {
+      html += '<div class="offer-modal-section">';
+      if (section.title) html += '<h4>' + section.title + '</h4>';
+      if (section.text) html += '<p>' + section.text + '</p>';
+      if (section.items && section.items.length) {
+        html += '<ul>';
+        section.items.forEach(function(item) {
+          html += '<li>' + item + '</li>';
+        });
+        html += '</ul>';
+      }
+      html += '</div>';
+    });
+    html += '<div class="offer-modal-cta"><a class="btn-primary" href="#enquiry" id="offerModalCta">Richiedi questa offerta</a></div>';
+    offerModalBody.innerHTML = html;
+
+    offerModal.classList.add('open');
+    offerModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    var modalCta = document.getElementById('offerModalCta');
+    if (modalCta) {
+      modalCta.addEventListener('click', function() {
+        closeOfferModal();
+      });
+    }
+  }
+
+  function closeOfferModal() {
+    offerModal.classList.remove('open');
+    offerModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.offer-detail-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      renderOfferModal(btn.getAttribute('data-offer'));
+    });
+  });
+
+  if (offerModalClose) {
+    offerModalClose.addEventListener('click', closeOfferModal);
+  }
+  if (offerModal) {
+    offerModal.addEventListener('click', function(e) {
+      if (e.target === offerModal) closeOfferModal();
+    });
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && offerModal && offerModal.classList.contains('open')) {
+      closeOfferModal();
+    }
+  });
 
   /* ── Accordion touch on mobile ── */
   document.querySelectorAll('.acc-tile').forEach(function (tile) {
