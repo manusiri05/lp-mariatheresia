@@ -212,6 +212,23 @@
     .review-name { font-size: 0.80rem; font-weight: 500; color: var(--dark); }
     .review-meta { font-size: 0.70rem; color: var(--muted); }
 
+
+    /* ── OFFERS ── */
+    #offers { background: var(--white); padding: var(--pad) 24px; }
+    .offers-grid { max-width: var(--max-w); margin: 52px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .offer-card { background: var(--cream); display: flex; flex-direction: column; overflow: hidden; border-bottom: 3px solid transparent; transition: transform 0.3s, border-color 0.3s; }
+    .offer-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+    .offer-image { aspect-ratio: 4/3; overflow: hidden; }
+    .offer-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .offer-card:hover .offer-image img { transform: scale(1.04); }
+    .offer-body { padding: 26px 24px 28px; display: flex; flex-direction: column; flex: 1; }
+    .offer-date { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .offer-title { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 400; line-height: 1.25; color: var(--dark); margin-bottom: 12px; }
+    .offer-text { font-size: 0.84rem; color: var(--muted); line-height: 1.75; flex: 1; }
+    .offer-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .offer-link { display: inline-flex; align-items: center; justify-content: center; padding: 11px 18px; border: 1px solid rgba(213,157,52,0.55); color: var(--gold-dark); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; transition: background 0.25s, border-color 0.25s, color 0.25s; }
+    .offer-link:hover { background: var(--gold); border-color: var(--gold); color: var(--white); }
+
     /* ── GALLERY ── */
     #gallery { background: var(--cream-mid); padding: var(--pad) 24px; }
     .gallery-grid { max-width: var(--max-w); margin-inline: auto; margin-top: 52px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
@@ -289,8 +306,7 @@
       .intro-image-wrap { display: none; }
       .accordion-grid { grid-template-columns: 1fr; }
       .acc-tile { height: 340px; }
-      .acc-body { max-height: 120px !important; opacity: 1 !important; }
-      .acc-link { max-height: 48px !important; opacity: 1 !important; }
+      .offers-grid { grid-template-columns: 1fr; }
       .usps-inner { grid-template-columns: repeat(2, 1fr); }
       .ratings-grid { grid-template-columns: 1fr; gap: 2px; }
       .reviews-grid { grid-template-columns: 1fr; }
@@ -308,6 +324,9 @@
       .slide-body { padding: 32px 24px; }
       .slider-nav { padding: 20px 24px; }
       .exp-grid { grid-template-columns: 1fr; }
+      .acc-body, .acc-link { max-height: 0 !important; opacity: 0 !important; overflow: hidden; }
+      .acc-tile.active .acc-body { max-height: 170px !important; opacity: 1 !important; }
+      .acc-tile.active .acc-link { max-height: 48px !important; opacity: 1 !important; }
       .cta-contact-bar { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
       .cta-divider { display: none; }
       .form-wrap { padding: 28px 24px; }
@@ -335,7 +354,6 @@
 <span class="logo-sub">Lagundo · Alto Adige</span>
 </a>
 <nav class="header-nav">
-<a class="header-tel" href="tel:+390473443251">+39 0473 443 251</a>
 <a class="btn-avail" href="#enquiry">
 <svg aria-hidden="true" viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 <rect height="11" rx="1" width="12" x="2" y="3"></rect>
@@ -354,8 +372,8 @@
 <div class="hero-overlay"></div>
 <div class="hero-content container">
 <div class="hero-badge">Hotel Lagundo 4 stelle  ·  Adults Only  ·  Alto Adige</div>
-<h1 class="hero-h1">Il vostro rifugio<br/>sopra Merano</h1>
-<span class="hero-kw">Hotel Maria Theresia: il vostro hotel Lagundo nel cuore dell’Alto Adige. Piscina panoramica, nuova spa 2026 e cucina gourmet ogni sera. Un hotel Lagundo Merano ideale per chi cerca tranquillità, panorama e autentica ospitalità alpina.</span>
+<h1 class="hero-h1">Hotel Lagundo tra autunno dorato<br/>e mercatini di Natale</h1>
+<span class="hero-kw">Hotel Maria Theresia: il vostro hotel Lagundo nel cuore dell’Alto Adige per vacanze tra foliage, Törggelen, relax e atmosfere natalizie. Piscina panoramica, nuova spa 2026 e cucina gourmet ogni sera: la scelta ideale per chi desidera un hotel Lagundo Merano tranquillo, panoramico e perfetto anche per i mercatini di Natale di dicembre.</span>
 <div class="hero-cta-wrap">
 <a class="btn-primary" href="#enquiry">Richiedi ora — senza impegno</a>
 <a class="btn-outline" href="#rooms">Camere &amp; Suite</a>
@@ -371,10 +389,10 @@
 <div class="intro-inner fade-up">
 <div class="intro-text-col">
 <span class="section-label">Albergo Lagundo – vicino Merano, Alto Adige</span>
-<h2 class="intro-h2">Dove le Alpi incontrano<br/>il calore italiano</h2>
+<h2 class="intro-h2">Autunno dorato,<br/>relax e magia d’inverno</h2>
 <p class="intro-text">Nel verde di Lagundo, a soli dieci minuti da Merano, <strong>Hotel Maria Theresia</strong> è un raffinato hotel benessere Lagundo Adults Only a 350 metri di altitudine. Il microclima protetto dalle Alpi e addolcito da influenze mediterranee rende questo resort Lagundo uno dei luoghi più piacevoli per una vacanza vicino Merano.</p>
-<p class="intro-text">Qui le giornate iniziano con una ricca colazione affacciata su vigneti e meleti e si concludono con un menu gourmet di cinque portate. Il nostro hotel Lagundo mezza pensione è perfetto per vacanze Lagundo Alto Adige tra escursioni, piste ciclabili, sentieri delle rogge e relax nella piscina panoramica riscaldata a 30°C.</p>
-<p class="intro-text">Dieci camere esclusive, nessun bambino e tutta la tranquillità che desiderate. Per chi vuole dormire a Lagundo con più servizi e privacy rispetto a un garni Lagundo.</p>
+<p class="intro-text">Qui le giornate iniziano con una ricca colazione affacciata su vigneti e meleti e si concludono con un menu gourmet di cinque portate. In autunno vi aspettano l’Indian Summer altoatesino, il Törggelen e passeggiate tra i colori della stagione; a dicembre, invece, il nostro hotel Lagundo mezza pensione è il punto di partenza ideale per vivere i mercatini di Natale di Merano e godersi momenti di puro relax nella piscina panoramica riscaldata a 30°C.</p>
+<p class="intro-text">Dieci camere esclusive, nessun bambino e tutta la tranquillità che desiderate. Per chi vuole dormire a Lagundo con più servizi e privacy rispetto a un garni Lagundo, soprattutto nei periodi più suggestivi dell’anno tra ottobre, novembre e dicembre.</p>
 <div class="intro-meta">
 <div><span class="meta-num">10</span><span class="meta-label">Camere esclusive</span></div>
 <div><span class="meta-num">350</span><span class="meta-label">m di altitudine</span></div>
@@ -438,8 +456,8 @@
 <section id="features">
 <div class="section-header fade-up">
 <span class="section-label">Perché scegliere Hotel Maria Theresia</span>
-<h2 class="section-h2">Tre motivi per cui gli ospiti<br/>ritornano anno dopo anno</h2>
-<p class="section-text">Dalla piscina alla cucina fino ai sentieri delle Dolomiti: un hotel con piscina Lagundo dove vivere l’ospitalità altoatesina in modo autentico. Scoprite anche le nostre offerte hotel Lagundo.</p>
+<h2 class="section-h2">Tre motivi per scegliere<br/>Lagundo in autunno e inverno</h2>
+<p class="section-text">Dal foliage autunnale ai mercatini di Natale di Merano, passando per la piscina panoramica e la cucina gourmet: un hotel con piscina Lagundo perfetto per vivere l’Alto Adige in uno dei periodi più belli dell’anno.</p>
 </div>
 <div class="accordion-grid">
 <div class="acc-tile">
@@ -515,6 +533,54 @@
 </div>
 </div>
 </section>
+
+<!-- ── OFFERS ── -->
+<section id="offers">
+<div class="section-header fade-up">
+<span class="section-label">Offerte hotel Lagundo</span>
+<h2 class="section-h2">Tre offerte perfette per<br/>autunno, relax e dicembre</h2>
+<p class="section-text">Se cercate un hotel Lagundo 4 stelle per l’autunno dorato, per settimane wellness a novembre o per vivere i mercatini di Natale di Merano a dicembre, qui trovate tre proposte particolarmente adatte.</p>
+</div>
+<div class="offers-grid fade-up">
+<article class="offer-card">
+<div class="offer-image"><img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/Benjamin_Pfitscher_WEB__bp_341227_c_benjamin_pfitscher_c_benjamin_pfitscher_web%20(33)%20Herbst%20Berg%20Panorama%20Vellau.jpg" alt="Colori e sapori d’autunno – Hotel Maria Theresia Lagundo" loading="lazy"/></div>
+<div class="offer-body">
+<div class="offer-date">11.10. – 01.11.26</div>
+<h3 class="offer-title">Colori e sapori d’autunno</h3>
+<p class="offer-text">Vivete l’Indian Summer altoatesino a Lagundo tra Törggelen, escursioni nei boschi colorati, passeggiate tra i vigneti e piacevoli momenti gourmet. Ideale per chi ama l’autunno in Alto Adige.</p>
+<div class="offer-actions">
+<a class="offer-link" href="https://www.mariatheresia.it/it/camere-prezzi-offerte/offerte/dettagli/colori-dautunno-2026/" target="_blank" rel="noopener">Dettagli</a>
+<a class="offer-link" href="#enquiry">Richiedi ora</a>
+</div>
+</div>
+</article>
+<article class="offer-card">
+<div class="offer-image"><img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/001_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3914.jpg" alt="Settimane Relax & Wellness – Hotel Maria Theresia Lagundo" loading="lazy"/></div>
+<div class="offer-body">
+<div class="offer-date">08.11. – 08.12.26</div>
+<h3 class="offer-title">Settimane Relax &amp; Wellness</h3>
+<p class="offer-text">Il periodo ideale per rallentare: nuova area wellness, piscina esterna riscaldata, cucina gourmet e un’atmosfera tranquilla senza folla. Perfetto per chi desidera rigenerarsi tra novembre e inizio dicembre.</p>
+<div class="offer-actions">
+<a class="offer-link" href="https://www.mariatheresia.it/it/camere-prezzi-offerte/offerte/dettagli/settimane-relax-wellness/" target="_blank" rel="noopener">Dettagli</a>
+<a class="offer-link" href="#enquiry">Richiedi ora</a>
+</div>
+</div>
+</article>
+<article class="offer-card">
+<div class="offer-image"><img src="https://raw.githubusercontent.com/manusiri05/lp-mariatheresia/main/020_maria-theresia_%C2%A9KOTTERSTEGER_260403_KOT_3948.jpg" alt="Magia d’inverno – Hotel Maria Theresia Lagundo" loading="lazy"/></div>
+<div class="offer-body">
+<div class="offer-date">Dicembre &amp; Capodanno 2026</div>
+<h3 class="offer-title">Magia d’inverno con un tocco in più</h3>
+<p class="offer-text">Per chi ama il dicembre altoatesino: passeggiata al Mercatino di Natale di Merano, atmosfera in baita, relax in hotel e un soggiorno perfetto per vivere la magia dell’inverno e delle feste.</p>
+<div class="offer-actions">
+<a class="offer-link" href="https://www.mariatheresia.it/it/camere-prezzi-offerte/offerte/dettagli/magia-dinverno-2026/" target="_blank" rel="noopener">Dettagli</a>
+<a class="offer-link" href="#enquiry">Richiedi ora</a>
+</div>
+</div>
+</article>
+</div>
+</section>
+
 <!-- ── ROOM SLIDER ── -->
 <section id="rooms">
 <div class="section-header fade-up">
