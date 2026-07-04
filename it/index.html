@@ -893,45 +893,27 @@
 </select>
 </div>
 <div>
-<label for="children">Bambini</label>
+<label for="children">Giovani ospiti (min. 16 anni)</label>
 <select id="children" name="children">
-<option selected="" value="0">Nessun bambino</option>
-<option value="1">1 bambino</option>
-<option value="2">2 bambini</option>
-<option value="3">3 bambini</option>
+<option selected="" value="0">Nessun accompagnatore</option>
+<option value="1">1 ospite (16–17 anni)</option>
+<option value="2">2 ospiti (16–17 anni)</option>
 </select>
 </div>
 <div class="child-age-field" id="childAge1">
-<label for="childAge1Input">Età del bambino 1</label>
+<label for="childAge1Input">Età ospite 1</label>
 <select id="childAge1Input" name="childAge1">
 <option value="">Selezionare</option>
-<option>Meno di 2 anni</option><option>2</option><option>3</option><option>4</option>
-<option>5</option><option>6</option><option>7</option><option>8</option>
-<option>9</option><option>10</option><option>11</option><option>12</option>
-<option>13</option><option>14</option><option>15</option><option>16</option>
-<option>17</option>
+<option value="16">16</option>
+<option value="17">17</option>
 </select>
 </div>
 <div class="child-age-field" id="childAge2">
-<label for="childAge2Input">Età del bambino 2</label>
+<label for="childAge2Input">Età ospite 2</label>
 <select id="childAge2Input" name="childAge2">
 <option value="">Selezionare</option>
-<option>Meno di 2 anni</option><option>2</option><option>3</option><option>4</option>
-<option>5</option><option>6</option><option>7</option><option>8</option>
-<option>9</option><option>10</option><option>11</option><option>12</option>
-<option>13</option><option>14</option><option>15</option><option>16</option>
-<option>17</option>
-</select>
-</div>
-<div class="child-age-field" id="childAge3">
-<label for="childAge3Input">Età del bambino 3</label>
-<select id="childAge3Input" name="childAge3">
-<option value="">Selezionare</option>
-<option>Meno di 2 anni</option><option>2</option><option>3</option><option>4</option>
-<option>5</option><option>6</option><option>7</option><option>8</option>
-<option>9</option><option>10</option><option>11</option><option>12</option>
-<option>13</option><option>14</option><option>15</option><option>16</option>
-<option>17</option>
+<option value="16">16</option>
+<option value="17">17</option>
 </select>
 </div>
 <div>
@@ -1225,7 +1207,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (childrenSelect) {
     childrenSelect.addEventListener('change', function () {
       var n = parseInt(this.value, 10) || 0;
-      for (var i = 1; i <= 3; i++) {
+      for (var i = 1; i <= 2; i++) {
         var field = byId('childAge' + i);
         var input = byId('childAge' + i + 'Input');
         if (!field) continue;
@@ -1277,7 +1259,7 @@ document.addEventListener('DOMContentLoaded', function () {
     markField('phone', phone.length < 5);
     if (phone.length < 5) ok = false;
 
-    var childrenCount = parseInt(safeValue('children'), 10) || 0;
+    var childrenCount = Math.min(parseInt(safeValue('children'), 10) || 0, 2);
     for (var i = 1; i <= childrenCount; i++) {
       var childAge = safeValue('childAge' + i + 'Input');
       markField('childAge' + i + 'Input', !childAge);
@@ -1304,7 +1286,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.textContent = 'Invio in corso…';
       }
 
-      var childrenCount = parseInt(safeValue('children'), 10) || 0;
+      var childrenCount = Math.min(parseInt(safeValue('children'), 10) || 0, 2);
       var childAges = [];
       for (var i = 1; i <= childrenCount; i++) {
         var age = safeValue('childAge' + i + 'Input');
